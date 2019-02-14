@@ -18,6 +18,13 @@
     name: policycoreutils-python
   become: True
 
+- name: Allow apache to load module
+  sefcontext:
+    target:  /etc/httpd/modules/mod_dispatcher.so
+    setype: httpd_sys_script_exec_t
+    state: present
+
+
 - name: ensure that centos-release-scl installed
   yum:
     name: centos-release-scl
@@ -34,4 +41,17 @@
     name: '{{ apacheService }}'
     enabled: yes
     state: started
+  become: True
+
+- name: Enable http port
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+  become: True
+
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
   become: True
