@@ -1,6 +1,28 @@
 ---
 # file: defaults/main.yml
 
+# Default account for run apache service
+webServerUser: apache
+# Default group for running apache service
+webServerGroup: apache
+# Default admin email
+webServerAdminEmail: root@localhost
+
+# Default apache version
+apacheVersion: '2.4'
+
+# Default apache port
+webServerHTTPPort: 80
+
+# Apache Log Level
+# All available levels here: https://httpd.apache.org/docs/2.4/mod/core.html
+webServerLogLevel: warn
+
+# Enable HTTPS by default or not
+webServerSSL: false
+# Default HTTPS port
+webServerHTTPsPort: 443
+
 # Dispatcher cache folder
 dispatcherRoot: /opt/aemDispatcherCache
 

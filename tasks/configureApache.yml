@@ -1,0 +1,33 @@
+---
+# file: tasks/configure.yml
+
+- name: ensure that httpd.conf is correct
+  template:
+    src: httpd.conf.j2
+    dest: '{{ httpdConfFile }}'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+  notify:
+  - restart httpd
+  become: True
+- meta: flush_handlers
+
+- name: ensure that ssl.conf is correct
+  template:
+    src: ssl.conf.j2
+    dest: '{{ sslConfFile }}'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+  notify:
+  - restart httpd
+  when: webServerSSL
+- meta: flush_handlers
+
+- name: ensure that directory for apache is ready
+  file:
+    path: '{{ apacheDir }}'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+    recurse: yes
+    state: directory
+  become: True

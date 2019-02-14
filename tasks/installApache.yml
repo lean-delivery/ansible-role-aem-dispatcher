@@ -1,0 +1,37 @@
+---
+# file: tasks/install.yml
+
+- name: 'ensure that group {{ webServerUser }} is present'
+  group:
+    name: '{{ webServerUser }}'
+  become: True
+
+- name: 'ensure that user {{ webServerUser }} is present'
+  user:
+    name: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+    comment: "Apache Web-server user"
+  become: True
+
+- name: ensure that utils for SELinux managment are installed
+  yum:
+    name: policycoreutils-python
+  become: True
+
+- name: ensure that centos-release-scl installed
+  yum:
+    name: centos-release-scl
+  when: ansible_distribution_version == '6.8'
+  become: True
+
+- name: ensure that httpd web-server is installed
+  yum:
+    name: '{{ apachePackages }}'
+  become: True
+
+- name: ensure that httpd is started
+  service:
+    name: '{{ apacheService }}'
+    enabled: yes
+    state: started
+  become: True

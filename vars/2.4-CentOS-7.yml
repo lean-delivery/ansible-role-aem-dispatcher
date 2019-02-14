@@ -1,0 +1,13 @@
+---
+# file: vars/aem_dispatchers-2.4-centos-7
+
+# Apache root dir
+apacheDir: /etc/httpd
+
+# Apache service name
+apacheService: httpd
+
+# Apache packages to install
+apachePackages:
+- httpd
+- mod_ssl

@@ -1,6 +1,15 @@
 ---
 # file: tasks/main.yml
 
+- name: set facts for Apache
+  include: set_factsApache.yml
+
+- name: install apache
+  include: installApache.yml
+
+- name: configure apache
+  include: configureApache.yml
+
 - name: set facts
   include: set_facts.yml
 

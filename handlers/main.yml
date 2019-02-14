@@ -1,2 +1,7 @@
----
-# handlers file for aem-dispatcher
+# file: roles/aem_dispatcher/handlers/main.yml
+
+-   name: restart httpd
+    service:
+        name: '{{ apacheService }}'
+        state: restarted
+#    become: True

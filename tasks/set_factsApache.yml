@@ -1,0 +1,21 @@
+---
+# file: tasks/set_facts.yml
+
+- name: include version and platform dependend varables set
+  include_vars: '{{ apacheVersion }}-{{ ansible_distribution }}-{{ ansible_distribution_version[0] }}.yml'
+
+- name: reinitialization of defaults as variables
+  set_fact:
+    webServerUser: '{{ webServerUser }}'
+    webServerGroup: '{{ webServerGroup }}'
+    webServerAdminEmail: '{{ webServerAdminEmail }}'
+    apacheVersion: '{{ apacheVersion }}'
+    webServerHTTPPort: '{{ webServerHTTPPort }}'
+    webServerLogLevel: '{{ webServerLogLevel }}'
+    webServerSSL: '{{ webServerSSL }}'
+    webServerHTTPsPort: '{{ webServerHTTPsPort }}'
+
+- name: prepare all required variables
+  set_fact:
+    httpdConfFile: '{{ apacheDir }}/conf/httpd.conf'
+    sslConfFile: '{{ apacheDir }}/conf.d/ssl.conf'
