@@ -1,0 +1,29 @@
+---
+# file: tasks/configure.yml
+
+- name: ensure that dispatcher configuration files are ok
+  template:
+    src: '{{ item }}.j2'
+    dest: '{{ dispatcherAnyLocation }}/{{ item }}'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+    mode: 0640
+  with_items:
+    - '{{ dispatcherConfigSet }}'
+  notify:
+  - restart httpd
+  become: True
+- meta: flush_handlers
+
+- name: ensure that main dispatcher configuration is ok
+  template:
+    src: dispatcher.conf.j2
+    dest: '{{ apacheDir }}/conf.d/dispatcher.conf'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+    mode: 0640
+  notify:
+  - restart httpd
+  become: True
+- meta: flush_handlers
+  become: True

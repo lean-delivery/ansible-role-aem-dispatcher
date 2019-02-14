@@ -1,0 +1,20 @@
+---
+# file: tasks/main.yml
+
+- name: set facts
+  include: set_facts.yml
+
+- name: check if service was installed before
+  stat:
+    path: '{{ dispatcherFile }}'
+  register: dispatcher_done
+- block:
+  - name: install Dispatcher
+    include: install.yml
+  - name: configure Dispatcher
+    include: configure.yml
+  - name: save successfull installation in file
+    file:
+      path: '{{ dispatcherFile }}'
+      state: touch
+  when: dispatcher_done.stat.exists == false

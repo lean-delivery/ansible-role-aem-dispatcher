@@ -1,0 +1,19 @@
+/0000 
+	{ 
+		/type "allow" 
+		/url "/*"
+	}
+
+# Deny external access to system console and CRX web application, using a regular expression
+/0001
+	{
+		/type "deny"
+		/url '/(system|crx|admin)(/.*)?'
+	}
+
+# allow  access to logout
+/0002 
+	{ 
+		/type "allow" 
+		/url "/system/sling/logout*" 
+	}

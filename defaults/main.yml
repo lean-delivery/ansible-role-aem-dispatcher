@@ -1,0 +1,17 @@
+---
+# file: defaults/main.yml
+
+# Dispatcher cache folder
+dispatcherRoot: /opt/aemDispatcherCache
+
+# Dispatcher module version
+dispatcherModuleVersion: '4.2.2'
+
+# Dispatcher log level
+# error(0): Errors
+# warn(1):  Warnings
+# info(2):  Infos
+# debug(3): Debug
+# trace(4): Trace
+dispatcherLogLevel: warn
+
