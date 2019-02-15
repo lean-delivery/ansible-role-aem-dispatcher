@@ -26,4 +26,4 @@
     file:
       path: '{{ dispatcherfile }}'
       state: touch
-  when: dispatcher_done.stat.exists == False
+  when: not dispatcher_done.stat
