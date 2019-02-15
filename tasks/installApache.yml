@@ -35,9 +35,3 @@
     enabled: True
     state: started
   become: True
-
-- name: Restart firewalld
-  service:
-    name: firewalld
-    state: restarted
-  become: True
