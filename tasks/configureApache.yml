@@ -4,9 +4,9 @@
 - name: ensure that httpd.conf is correct
   template:
     src: httpd.conf.j2
-    dest: '{{ httpdConfFile }}'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    dest: '{{ httpd_conf_file }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
   notify:
   - restart httpd
   become: True
@@ -15,26 +15,19 @@
 - name: ensure that ssl.conf is correct
   template:
     src: ssl.conf.j2
-    dest: '{{ sslConfFile }}'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    dest: '{{ ssl_conf_file }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
   notify:
   - restart httpd
-  when: webServerSSL
+  when: web_server_ssl
 - meta: flush_handlers
 
 - name: ensure that directory for apache is ready
   file:
-<<<<<<< HEAD
-    path: '{{ apachedir }}'
-    owner: '{{ webserveruser }}'
-    group: '{{ webservergroup }}'
-    recurse: True
-=======
-    path: '{{ apacheDir }}'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    path: '{{ apache_dir }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
     recurse: yes
->>>>>>> parent of 0b79515... Alignment with lint rules
     state: directory
   become: True

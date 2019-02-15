@@ -15,7 +15,7 @@
 
 - name: check if service was installed before
   stat:
-    path: '{{ dispatcherFile }}'
+    path: '{{ dispatcher_file }}'
   register: dispatcher_done
 - block:
   - name: install Dispatcher
@@ -24,6 +24,6 @@
     include: configure.yml
   - name: save successfull installation in file
     file:
-      path: '{{ dispatcherFile }}'
+      path: '{{ dispatcher_file }}'
       state: touch
   when: not dispatcher_done.stat

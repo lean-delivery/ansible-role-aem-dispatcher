@@ -3,32 +3,24 @@
 
 - name: reinitialization of defaults as variables
   set_fact:
-    dispatcherModuleVersion: '{{ dispatcherModuleVersion }}'
-    dispatcherRoot: '{{ dispatcherRoot }}'
+    dispatcher_module_version: '{{ dispatcher_module_version }}'
+    dispatcher_root: '{{ dispatcher_root }}'
 
 - name: variables preparation
   set_fact:
-<<<<<<< HEAD
-    ftpcommonlink: "ftp://{{ ftp_login }}:{{ ftp_password }}@{{ ftp_server }}\
-    /aem-playbook/aem/dispatcher/dispatcher-{{ dispatchermoduleversion }}-apache-{{ apacheversion }}"
-    dispatcherfile: /opt/dispatcher.done
-    semanageshfile: '{{ dispatcherroot }}/semanage.sh'
-    dispatcheranylocation: '{{ apachedir }}/conf'
-    dispatcherconfigset:
-=======
-    ftpCommonLink: 'ftp://{{ ftpLogin }}:{{ ftpPassword }}@{{ ftpServer }}/aem-playbook/aem/dispatcher/dispatcher-{{ dispatcherModuleVersion }}-apache-{{ apacheVersion }}'
-    dispatcherFile: /opt/dispatcher.done
-    semanageSHFile: '{{ dispatcherRoot }}/semanage.sh'
-    dispatcherAnyLocation: '{{ apacheDir }}/conf'
-    dispatcherConfigSet:
->>>>>>> parent of 0b79515... Alignment with lint rules
+    ftp_common_link: 'ftp://{{ ftp_login }}:{{ ftp_password }}@{{ ftp_server }}\
+    /aem-playbook/aem/dispatcher/dispatcher-{{ dispatcher_module_version }}-apache-{{ apache_version }}'
+    dispatcher_file: /opt/dispatcher.done
+    semanage_sh_file: '{{ dispatcher_root }}/semanage.sh'
+    dispatcher_any_location: '{{ apache_dir }}/conf'
+    dispatcher_config_set:
       - dispatcher.any
       - filters.any
       - invalidate.any
       - renders.any
       - vhosts.any
       - clientheaders.any
-    dispatcherBack: []
+    dispatcher_back: []
 
 - name: check if dispatcherBack are present
   fail:
@@ -37,30 +29,25 @@
 
 - name: find dispatcherBack for dispatcher without render
   set_fact:
-    dispatcherBack: "{{ dispatcherBack + [ inventory_hostname ] }}"
+    dispatcher_back: "{{ dispatcher_back + [ inventory_hostname ] }}"
   when: render is undefined
 
-- name: find dispatcherBack for dispatcher with render
+- name: find dispatcher_back for dispatcher with render
   set_fact:
-    dispatcherBack: "{{ dispatcherBack + [ item ] }}"
+    dispatcher_back: "{{ dispatcher_back + [ item ] }}"
   with_items: "{{ render.split(',') }}"
   when: render is defined
 
-- name: rewrite dispatcherBack if it is test docker container
+- name: rewrite dispatcher_back if it is test docker container
   set_fact:
-    dispatcherBack: ['localhost']
+    dispatcher_back: ['localhost']
   when: "inventory_hostname == 'test-docker-dispatcher'"
 
 - name: prepare FTP Link variable (with SSL)
   set_fact:
-    ftpServerLink: '{{ ftpCommonLink }}-ssl.so'
-  when: webServerSSL
+    ftp_server_link: '{{ ftp_common_link }}-ssl.so'
+  when: web_server_ssl
 - name: prepare FTP Link variable (without SSL)
   set_fact:
-<<<<<<< HEAD
-    ftpserverlink: '{{ ftpcommonlink }}.so'
-  when: not webserverssl
-=======
-    ftpServerLink: '{{ ftpCommonLink }}.so'
-  when: not webServerSSL
->>>>>>> parent of 0b79515... Alignment with lint rules
+    ftp_server_link: '{{ ftp_common_link }}.so'
+  when: not web_server_ssl

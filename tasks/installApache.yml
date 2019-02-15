@@ -1,15 +1,15 @@
 ---
 # file: tasks/install.yml
 
-- name: 'ensure that group {{ webServerUser }} is present'
+- name: 'ensure that group {{ web_server_user }} is present'
   group:
-    name: '{{ webServerUser }}'
+    name: '{{ web_server_user }}'
   become: True
 
-- name: 'ensure that user {{ webServerUser }} is present'
+- name: 'ensure that user {{ web_server_user }} is present'
   user:
-    name: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    name: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
     comment: "Apache Web-server user"
   become: True
 
@@ -26,28 +26,14 @@
 
 - name: ensure that httpd web-server is installed
   yum:
-    name: '{{ apachePackages }}'
+    name: '{{ apache_packages }}'
   become: True
 
 - name: ensure that httpd is started
   service:
-<<<<<<< HEAD
-    name: '{{ apacheservice }}'
-    enabled: True
-=======
-    name: '{{ apacheService }}'
+    name: '{{ apache_service }}'
     enabled: yes
->>>>>>> parent of 0b79515... Alignment with lint rules
     state: started
-<<<<<<< HEAD
-<<<<<<< HEAD
-  become: True
-
-- name: Enable http port
-  firewalld:
-    port: 80/tcp
-    permanent: True
-    state: enabled
   become: True
 
 - name: Restart firewalld
@@ -55,9 +41,3 @@
     name: firewalld
     state: restarted
   become: True
-=======
-  become: True
->>>>>>> parent of a991f6c... Include Apache-httpd installation
-=======
-  become: True
->>>>>>> parent of a991f6c... Include Apache-httpd installation

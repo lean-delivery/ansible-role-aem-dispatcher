@@ -1,13 +1,13 @@
-ServerRoot "{{ apacheDir }}"
+ServerRoot "{{ apache_dir }}"
 
-Listen {{ webServerHTTPPort }}
+Listen {{ web_server_http_port }}
 
 Include conf.modules.d/*.conf
 
-User {{ webServerUser }}
-Group {{ webServerUser }}
+User {{ web_server_user }}
+Group {{ web_server_user }}
 
-ServerAdmin {{ webServerAdminEmail }}
+ServerAdmin {{ web_server_admin_email }}
 
 <IfModule dir_module>
     DirectoryIndex index.html
@@ -19,7 +19,7 @@ ServerAdmin {{ webServerAdminEmail }}
 
 ErrorLog "logs/error_log"
 
-LogLevel {{ webServerLogLevel }}
+LogLevel {{ web_server_log_level }}
 
 <IfModule log_config_module>
     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined

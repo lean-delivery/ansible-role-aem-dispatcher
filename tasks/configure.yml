@@ -4,12 +4,12 @@
 - name: ensure that dispatcher configuration files are ok
   template:
     src: '{{ item }}.j2'
-    dest: '{{ dispatcherAnyLocation }}/{{ item }}'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    dest: '{{ dispatcher_any_location }}/{{ item }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
     mode: 0640
   with_items:
-    - '{{ dispatcherConfigSet }}'
+    - '{{ dispatcher_config_set }}'
   notify:
   - restart httpd
   become: True
@@ -18,20 +18,11 @@
 - name: ensure that main dispatcher configuration is ok
   template:
     src: dispatcher.conf.j2
-    dest: '{{ apacheDir }}/conf.d/dispatcher.conf'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    dest: '{{ apache_dir }}/conf.d/dispatcher.conf'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
     mode: 0640
   notify:
   - restart httpd
   become: True
 - meta: flush_handlers
-<<<<<<< HEAD
-<<<<<<< HEAD
-  become: True
-=======
-  become: True
->>>>>>> parent of a991f6c... Include Apache-httpd installation
-=======
-  become: True
->>>>>>> parent of a991f6c... Include Apache-httpd installation

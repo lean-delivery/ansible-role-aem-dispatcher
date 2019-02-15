@@ -1,16 +1,8 @@
 ---
 # file: roles/aem_dispatcher/handlers/main.yml
 
-<<<<<<< HEAD
-- name: restart httpd
-  service:
-    name: '{{ apacheservice }}'
-    state: restarted
-  become: True
-=======
 -   name: restart httpd
     service:
-        name: '{{ apacheService }}'
+        name: '{{ apache_service }}'
         state: restarted
 #    become: True
->>>>>>> parent of 0b79515... Alignment with lint rules
