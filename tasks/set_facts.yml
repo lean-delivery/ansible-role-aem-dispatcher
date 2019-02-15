@@ -8,7 +8,7 @@
 
 - name: variables preparation
   set_fact:
-    ftpcommonlink: "ftp://{{ ftplogin }}:{{ ftppassword }}@{{ ftpserver }}\
+    ftpcommonlink: "ftp://{{ ftp_login }}:{{ ftp_password }}@{{ ftp_server }}\
     /aem-playbook/aem/dispatcher/dispatcher-{{ dispatchermoduleversion }}-apache-{{ apacheversion }}"
     dispatcherfile: /opt/dispatcher.done
     semanageshfile: '{{ dispatcherroot }}/semanage.sh'

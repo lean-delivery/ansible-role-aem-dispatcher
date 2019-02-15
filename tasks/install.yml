@@ -12,7 +12,7 @@
 
 - name: ensure that dispatcher module is present
   get_url:
-    url: '{{ ftpserverlink }}'
+    url: '{{ ftp_server_link }}'
     dest: '{{ apachedir }}/modules/mod_dispatcher.so'
     owner: '{{ webserveruser }}'
     group: '{{ webservergroup }}'
