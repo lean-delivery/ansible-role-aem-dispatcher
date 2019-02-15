@@ -26,4 +26,8 @@
   - restart httpd
   become: True
 - meta: flush_handlers
+<<<<<<< HEAD
   become: True
+=======
+  become: True
+>>>>>>> parent of a991f6c... Include Apache-httpd installation
