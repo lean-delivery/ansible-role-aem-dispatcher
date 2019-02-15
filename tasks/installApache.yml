@@ -32,7 +32,7 @@
 - name: ensure that httpd is started
   service:
     name: '{{ apache_service }}'
-    enabled: yes
+    enabled: True
     state: started
   become: True
 
