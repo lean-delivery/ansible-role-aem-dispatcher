@@ -1,15 +1,15 @@
 ---
 # file: tasks/install.yml
 
-- name: 'ensure that group {{ webServerUser }} is present'
+- name: 'ensure that group {{ webserveruser }} is present'
   group:
-    name: '{{ webServerUser }}'
+    name: '{{ webserveruser }}'
   become: True
 
-- name: 'ensure that user {{ webServerUser }} is present'
+- name: 'ensure that user {{ webserveruser }} is present'
   user:
-    name: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    name: '{{ webserveruser }}'
+    group: '{{ webservergroup }}'
     comment: "Apache Web-server user"
   become: True
 
@@ -33,12 +33,12 @@
 
 - name: ensure that httpd web-server is installed
   yum:
-    name: '{{ apachePackages }}'
+    name: '{{ apachepackages }}'
   become: True
 
 - name: ensure that httpd is started
   service:
-    name: '{{ apacheService }}'
+    name: '{{ apacheservice }}'
     enabled: yes
     state: started
   become: True

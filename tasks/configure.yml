@@ -4,12 +4,12 @@
 - name: ensure that dispatcher configuration files are ok
   template:
     src: '{{ item }}.j2'
-    dest: '{{ dispatcherAnyLocation }}/{{ item }}'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    dest: '{{ dispatcheranylocation }}/{{ item }}'
+    owner: '{{ webserveruser }}'
+    group: '{{ webservergroup }}'
     mode: 0640
   with_items:
-    - '{{ dispatcherConfigSet }}'
+    - '{{ dispatcherconfigset }}'
   notify:
   - restart httpd
   become: True
@@ -18,9 +18,9 @@
 - name: ensure that main dispatcher configuration is ok
   template:
     src: dispatcher.conf.j2
-    dest: '{{ apacheDir }}/conf.d/dispatcher.conf'
-    owner: '{{ webServerUser }}'
-    group: '{{ webServerGroup }}'
+    dest: '{{ apachedir }}/conf.d/dispatcher.conf'
+    owner: '{{ webserveruser }}'
+    group: '{{ webservergroup }}'
     mode: 0640
   notify:
   - restart httpd

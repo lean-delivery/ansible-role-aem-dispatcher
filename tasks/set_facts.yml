@@ -3,23 +3,23 @@
 
 - name: reinitialization of defaults as variables
   set_fact:
-    dispatcherModuleVersion: '{{ dispatcherModuleVersion }}'
-    dispatcherRoot: '{{ dispatcherRoot }}'
+    dispatchermoduleversion: '{{ dispatchermoduleversion }}'
+    dispatcherroot: '{{ dispatcherroot }}'
 
 - name: variables preparation
   set_fact:
-    ftpCommonLink: 'ftp://{{ ftpLogin }}:{{ ftpPassword }}@{{ ftpServer }}/aem-playbook/aem/dispatcher/dispatcher-{{ dispatcherModuleVersion }}-apache-{{ apacheVersion }}'
-    dispatcherFile: /opt/dispatcher.done
-    semanageSHFile: '{{ dispatcherRoot }}/semanage.sh'
-    dispatcherAnyLocation: '{{ apacheDir }}/conf'
-    dispatcherConfigSet:
+    ftpcommonlink: 'ftp://{{ ftplogin }}:{{ ftppassword }}@{{ ftpserver }}/aem-playbook/aem/dispatcher/dispatcher-{{ dispatchermoduleversion }}-apache-{{ apacheversion }}'
+    dispatcherfile: /opt/dispatcher.done
+    semanageshfile: '{{ dispatcherroot }}/semanage.sh'
+    dispatcheranylocation: '{{ apachedir }}/conf'
+    dispatcherconfigset:
       - dispatcher.any
       - filters.any
       - invalidate.any
       - renders.any
       - vhosts.any
       - clientheaders.any
-    dispatcherBack: []
+    dispatcherback: []
 
 - name: check if dispatcherBack are present
   fail:
@@ -28,25 +28,25 @@
 
 - name: find dispatcherBack for dispatcher without render
   set_fact:
-    dispatcherBack: "{{ dispatcherBack + [ inventory_hostname ] }}"
+    dispatcherback: "{{ dispatcherback + [ inventory_hostname ] }}"
   when: render is undefined
 
 - name: find dispatcherBack for dispatcher with render
   set_fact:
-    dispatcherBack: "{{ dispatcherBack + [ item ] }}"
+    dispatcherback: "{{ dispatcherback + [ item ] }}"
   with_items: "{{ render.split(',') }}"
   when: render is defined
 
 - name: rewrite dispatcherBack if it is test docker container
   set_fact:
-    dispatcherBack: ['localhost']
+    dispatcherback: ['localhost']
   when: "inventory_hostname == 'test-docker-dispatcher'"
 
 - name: prepare FTP Link variable (with SSL)
   set_fact:
-    ftpServerLink: '{{ ftpCommonLink }}-ssl.so'
-  when: webServerSSL
+    ftpserverlink: '{{ ftpcommonlink }}-ssl.so'
+  when: webserverssl
 - name: prepare FTP Link variable (without SSL)
   set_fact:
-    ftpServerLink: '{{ ftpCommonLink }}.so'
-  when: not webServerSSL
+    ftpserverlink: '{{ ftpcommonlink }}.so'
+  when: not webserverssl

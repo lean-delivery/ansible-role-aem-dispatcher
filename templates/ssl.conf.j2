@@ -1,5 +1,5 @@
-{% if webServerSSL %}
-Listen {{ webServerHTTPsPort }} https
+{% if webServerssl %}
+Listen {{ webserverhttpsport }} https
 
 SSLPassPhraseDialog exec:/usr/libexec/httpd-ssl-pass-dialog
 

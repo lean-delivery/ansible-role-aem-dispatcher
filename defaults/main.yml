@@ -2,32 +2,32 @@
 # file: defaults/main.yml
 
 # Default account for run apache service
-webServerUser: apache
+webserveruser: apache
 # Default group for running apache service
-webServerGroup: apache
+webservergroup: apache
 # Default admin email
-webServerAdminEmail: root@localhost
+webserveradminemail: root@localhost
 
 # Default apache version
-apacheVersion: '2.4'
+apacheversion: '2.4'
 
 # Default apache port
-webServerHTTPPort: 80
+webserverhttpport: 80
 
 # Apache Log Level
 # All available levels here: https://httpd.apache.org/docs/2.4/mod/core.html
-webServerLogLevel: warn
+webserverloglevel: warn
 
 # Enable HTTPS by default or not
-webServerSSL: false
+webserverssl: false
 # Default HTTPS port
-webServerHTTPsPort: 443
+webserverhttpsport: 443
 
 # Dispatcher cache folder
-dispatcherRoot: /opt/aemDispatcherCache
+dispatcherroot: /opt/aemDispatcherCache
 
 # Dispatcher module version
-dispatcherModuleVersion: '4.2.2'
+dispatchermoduleversion: '4.2.2'
 
 # Dispatcher log level
 # error(0): Errors
@@ -35,5 +35,5 @@ dispatcherModuleVersion: '4.2.2'
 # info(2):  Infos
 # debug(3): Debug
 # trace(4): Trace
-dispatcherLogLevel: warn
+dispatcherloglevel: warn
 

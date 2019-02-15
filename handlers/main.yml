@@ -2,6 +2,6 @@
 
 -   name: restart httpd
     service:
-        name: '{{ apacheService }}'
+        name: '{{ apacheservice }}'
         state: restarted
 #    become: True
