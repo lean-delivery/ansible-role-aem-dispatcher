@@ -1,15 +1,15 @@
 ---
 # file: tasks/install.yml
 
-- name: 'ensure that group {{ webserveruser }} is present'
+- name: 'ensure that group {{ webServerUser }} is present'
   group:
-    name: '{{ webserveruser }}'
+    name: '{{ webServerUser }}'
   become: True
 
-- name: 'ensure that user {{ webserveruser }} is present'
+- name: 'ensure that user {{ webServerUser }} is present'
   user:
-    name: '{{ webserveruser }}'
-    group: '{{ webservergroup }}'
+    name: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
     comment: "Apache Web-server user"
   become: True
 
@@ -26,13 +26,18 @@
 
 - name: ensure that httpd web-server is installed
   yum:
-    name: '{{ apachepackages }}'
+    name: '{{ apachePackages }}'
   become: True
 
 - name: ensure that httpd is started
   service:
+<<<<<<< HEAD
     name: '{{ apacheservice }}'
     enabled: True
+=======
+    name: '{{ apacheService }}'
+    enabled: yes
+>>>>>>> parent of 0b79515... Alignment with lint rules
     state: started
 <<<<<<< HEAD
 <<<<<<< HEAD

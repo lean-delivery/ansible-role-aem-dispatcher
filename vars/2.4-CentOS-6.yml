@@ -2,12 +2,12 @@
 # file: vars/aem_dispatchers-2.4-centos-6
 
 # Apache root dir
-apachedir: /opt/rh/httpd24/root/etc/httpd
+apacheDir: /opt/rh/httpd24/root/etc/httpd
 
 # Apache service name
-apacheservice: httpd24-httpd
+apacheService: httpd24-httpd
 
 # Apache packages to install
-apachepackages:
+apachePackages:
 - httpd24
 - httpd24-mod_ssl

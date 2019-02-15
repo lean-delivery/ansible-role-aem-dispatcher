@@ -3,24 +3,32 @@
 
 - name: reinitialization of defaults as variables
   set_fact:
-    dispatchermoduleversion: '{{ dispatchermoduleversion }}'
-    dispatcherroot: '{{ dispatcherroot }}'
+    dispatcherModuleVersion: '{{ dispatcherModuleVersion }}'
+    dispatcherRoot: '{{ dispatcherRoot }}'
 
 - name: variables preparation
   set_fact:
+<<<<<<< HEAD
     ftpcommonlink: "ftp://{{ ftp_login }}:{{ ftp_password }}@{{ ftp_server }}\
     /aem-playbook/aem/dispatcher/dispatcher-{{ dispatchermoduleversion }}-apache-{{ apacheversion }}"
     dispatcherfile: /opt/dispatcher.done
     semanageshfile: '{{ dispatcherroot }}/semanage.sh'
     dispatcheranylocation: '{{ apachedir }}/conf'
     dispatcherconfigset:
+=======
+    ftpCommonLink: 'ftp://{{ ftpLogin }}:{{ ftpPassword }}@{{ ftpServer }}/aem-playbook/aem/dispatcher/dispatcher-{{ dispatcherModuleVersion }}-apache-{{ apacheVersion }}'
+    dispatcherFile: /opt/dispatcher.done
+    semanageSHFile: '{{ dispatcherRoot }}/semanage.sh'
+    dispatcherAnyLocation: '{{ apacheDir }}/conf'
+    dispatcherConfigSet:
+>>>>>>> parent of 0b79515... Alignment with lint rules
       - dispatcher.any
       - filters.any
       - invalidate.any
       - renders.any
       - vhosts.any
       - clientheaders.any
-    dispatcherback: []
+    dispatcherBack: []
 
 - name: check if dispatcherBack are present
   fail:
@@ -29,25 +37,30 @@
 
 - name: find dispatcherBack for dispatcher without render
   set_fact:
-    dispatcherback: "{{ dispatcherback + [ inventory_hostname ] }}"
+    dispatcherBack: "{{ dispatcherBack + [ inventory_hostname ] }}"
   when: render is undefined
 
 - name: find dispatcherBack for dispatcher with render
   set_fact:
-    dispatcherback: "{{ dispatcherback + [ item ] }}"
+    dispatcherBack: "{{ dispatcherBack + [ item ] }}"
   with_items: "{{ render.split(',') }}"
   when: render is defined
 
 - name: rewrite dispatcherBack if it is test docker container
   set_fact:
-    dispatcherback: ['localhost']
+    dispatcherBack: ['localhost']
   when: "inventory_hostname == 'test-docker-dispatcher'"
 
 - name: prepare FTP Link variable (with SSL)
   set_fact:
-    ftpserverlink: '{{ ftpcommonlink }}-ssl.so'
-  when: webserverssl
+    ftpServerLink: '{{ ftpCommonLink }}-ssl.so'
+  when: webServerSSL
 - name: prepare FTP Link variable (without SSL)
   set_fact:
+<<<<<<< HEAD
     ftpserverlink: '{{ ftpcommonlink }}.so'
   when: not webserverssl
+=======
+    ftpServerLink: '{{ ftpCommonLink }}.so'
+  when: not webServerSSL
+>>>>>>> parent of 0b79515... Alignment with lint rules

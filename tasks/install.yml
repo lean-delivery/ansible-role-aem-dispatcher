@@ -1,19 +1,26 @@
 ---
 # file: tasks/install.yml
 
-- name: 'ensure that {{ dispatcherroot }} path is ready'
+- name: 'ensure that {{ dispatcherRoot }} path is ready'
   file:
-    path: '{{ dispatcherroot }}'
-    owner: '{{ webserveruser }}'
-    group: '{{ webservergroup }}'
+    path: '{{ dispatcherRoot }}'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
     state: directory
     mode: 0750
   become: True
 
 - name: ensure that dispatcher module is present
   get_url:
+<<<<<<< HEAD
     url: '{{ ftp_server_link }}'
     dest: '{{ apachedir }}/modules/mod_dispatcher.so'
     owner: '{{ webserveruser }}'
     group: '{{ webservergroup }}'
+=======
+    url: '{{ ftpServerLink }}'
+    dest: '{{ apacheDir }}/modules/mod_dispatcher.so'
+    owner: '{{ webServerUser }}'
+    group: '{{ webServerGroup }}'
+>>>>>>> parent of 0b79515... Alignment with lint rules
     mode: 0755

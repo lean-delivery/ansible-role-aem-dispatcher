@@ -2,32 +2,32 @@
 # file: defaults/main.yml
 
 # Default account for run apache service
-webserveruser: apache
+webServerUser: apache
 # Default group for running apache service
-webservergroup: apache
+webServerGroup: apache
 # Default admin email
-webserveradminemail: root@localhost
+webServerAdminEmail: root@localhost
 
 # Default apache version
-apacheversion: '2.4'
+apacheVersion: '2.4'
 
 # Default apache port
-webserverhttpport: 80
+webServerHTTPPort: 80
 
 # Apache Log Level
 # All available levels here: https://httpd.apache.org/docs/2.4/mod/core.html
-webserverloglevel: warn
+webServerLogLevel: warn
 
 # Enable HTTPS by default or not
-webserverssl: false
+webServerSSL: false
 # Default HTTPS port
-webserverhttpsport: 443
+webServerHTTPsPort: 443
 
 # Dispatcher cache folder
-dispatcherroot: /opt/aemDispatcherCache
+dispatcherRoot: /opt/aemDispatcherCache
 
 # Dispatcher module version
-dispatchermoduleversion: '4.2.2'
+dispatcherModuleVersion: '4.2.2'
 
 # Dispatcher log level
 # error(0): Errors
@@ -35,4 +35,9 @@ dispatchermoduleversion: '4.2.2'
 # info(2):  Infos
 # debug(3): Debug
 # trace(4): Trace
+<<<<<<< HEAD
 dispatcherloglevel: warn
+=======
+dispatcherLogLevel: warn
+
+>>>>>>> parent of 0b79515... Alignment with lint rules

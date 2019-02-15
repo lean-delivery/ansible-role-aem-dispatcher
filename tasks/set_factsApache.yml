@@ -2,20 +2,25 @@
 # file: tasks/set_facts.yml
 
 - name: include version and platform dependend varables set
-  include_vars: '{{ apacheversion }}-{{ ansible_distribution }}-{{ ansible_distribution_version[0] }}.yml'
+  include_vars: '{{ apacheVersion }}-{{ ansible_distribution }}-{{ ansible_distribution_version[0] }}.yml'
 
 - name: reinitialization of defaults as variables
   set_fact:
-    webserveruser: '{{ webserveruser }}'
-    webservergroup: '{{ webservergroup }}'
-    webserveradminemail: '{{ webserveradminemail }}'
-    apacheversion: '{{ apacheversion }}'
-    webserverhttpport: '{{ webserverhttpport }}'
-    webserverloglevel: '{{ webserverloglevel }}'
-    webserverssl: '{{ webserverssl }}'
-    webserverhttpsport: '{{ webserverhttpsport }}'
+    webServerUser: '{{ webServerUser }}'
+    webServerGroup: '{{ webServerGroup }}'
+    webServerAdminEmail: '{{ webServerAdminEmail }}'
+    apacheVersion: '{{ apacheVersion }}'
+    webServerHTTPPort: '{{ webServerHTTPPort }}'
+    webServerLogLevel: '{{ webServerLogLevel }}'
+    webServerSSL: '{{ webServerSSL }}'
+    webServerHTTPsPort: '{{ webServerHTTPsPort }}'
 
 - name: prepare all required variables
   set_fact:
+<<<<<<< HEAD
     httpdconffile: '{{ apachedir }}/conf/httpd.conf'
     sslconffile: '{{ apachedir }}/conf.d/ssl.conf'
+=======
+    httpdConfFile: '{{ apacheDir }}/conf/httpd.conf'
+    sslConfFile: '{{ apacheDir }}/conf.d/ssl.conf'
+>>>>>>> parent of 0b79515... Alignment with lint rules
