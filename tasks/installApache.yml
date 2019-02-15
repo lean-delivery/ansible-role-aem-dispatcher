@@ -39,14 +39,14 @@
 - name: ensure that httpd is started
   service:
     name: '{{ apacheservice }}'
-    enabled: yes
+    enabled: True
     state: started
   become: True
 
 - name: Enable http port
   firewalld:
     port: 80/tcp
-    permanent: yes
+    permanent: True
     state: enabled
   become: True
 

@@ -28,6 +28,6 @@
     path: '{{ apachedir }}'
     owner: '{{ webserveruser }}'
     group: '{{ webservergroup }}'
-    recurse: yes
+    recurse: True
     state: directory
   become: True
