@@ -35,6 +35,7 @@
     enabled: True
     state: started
 <<<<<<< HEAD
+<<<<<<< HEAD
   become: True
 
 - name: Enable http port
@@ -49,6 +50,9 @@
     name: firewalld
     state: restarted
   become: True
+=======
+  become: True
+>>>>>>> parent of a991f6c... Include Apache-httpd installation
 =======
   become: True
 >>>>>>> parent of a991f6c... Include Apache-httpd installation
