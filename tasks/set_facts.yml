@@ -15,14 +15,14 @@
     dispatcher_file: /opt/dispatcher.done
     semanage_sh_file: '{{ dispatcher_root }}/semanage.sh'
     dispatcher_any_location: '{{ apache_dir }}/conf'
-    dispatcher_config_set:
-      - dispatcher.any
-      - filters.any
-      - invalidate.any
-      - renders.any
-      - vhosts.any
-      - clientheaders.any
-    dispatcher_back: []
+    #dispatcher_config_set:
+    #  - dispatcher.any
+    #  - filters.any
+    #  - invalidate.any
+    #  - renders.any
+    #  - vhosts.any
+    #  - clientheaders.any
+    #dispatcher_back: []
 
 - name: check if dispatcherBack are present
   fail:
