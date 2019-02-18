@@ -29,21 +29,21 @@
 #    msg: "No dispatcherBack available!"
 #  when: render is undefined and 'aem_instances' not in group_names
 
-- name: find dispatcherBack for dispatcher without render
-  set_fact:
-    dispatcher_back: "{{ dispatcher_back + [ inventory_hostname ] }}"
-  when: render is undefined
+#- name: find dispatcherBack for dispatcher without render
+#  set_fact:
+#    dispatcher_back: "{{ dispatcher_back + [ inventory_hostname ] }}"
+#  when: render is undefined
 
-- name: find dispatcher_back for dispatcher with render
-  set_fact:
-    dispatcher_back: "{{ dispatcher_back + [ item ] }}"
-  with_items: "{{ render.split(',') }}"
-  when: render is defined
+#- name: find dispatcher_back for dispatcher with render
+#  set_fact:
+#    dispatcher_back: "{{ dispatcher_back + [ item ] }}"
+#  with_items: "{{ render.split(',') }}"
+#  when: render is defined
 
-- name: rewrite dispatcher_back if it is test docker container
-  set_fact:
-    dispatcher_back: ['localhost']
-  when: "inventory_hostname == 'test-docker-dispatcher'"
+#- name: rewrite dispatcher_back if it is test docker container
+#  set_fact:
+#    dispatcher_back: ['localhost']
+#  when: "inventory_hostname == 'test-docker-dispatcher'"
 
 - name: prepare FTP Link variable (with SSL)
   set_fact:
