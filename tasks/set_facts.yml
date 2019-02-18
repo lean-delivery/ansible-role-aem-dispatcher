@@ -24,10 +24,10 @@
     #  - clientheaders.any
     #dispatcher_back: []
 
-- name: check if dispatcherBack are present
-  fail:
-    msg: "No dispatcherBack available!"
-  when: render is undefined and 'aem_instances' not in group_names
+#- name: check if dispatcherBack are present
+#  fail:
+#    msg: "No dispatcherBack available!"
+#  when: render is undefined and 'aem_instances' not in group_names
 
 - name: find dispatcherBack for dispatcher without render
   set_fact:
