@@ -8,10 +8,10 @@
 
 - name: variables preparation
   set_fact:
-#    ftp_common_link: 'ftp://{{ ftp_login }}:{{ ftp_password }}@{{ ftp_server }}\
-#    /aem-playbook/aem/dispatcher/dispatcher-{{ dispatcher_module_version }}-apache-{{ apache_version }}'
-    ftp_common_link: "{{ lookup('env','STORAGE_AWS') }}/aem//aem-playbook/aem/dispatcher/dispatcher-\
-    {{ dispatcher_module_version }}-apache-{{ apache_version }}"
+    ftp_common_link: 'ftp://{{ ftp_login }}:{{ ftp_password }}@{{ ftp_server }}\
+    /aem-playbook/aem_for_ldi/aem/dispatcher/dispatcher-{{ dispatcher_module_version }}-apache-{{ apache_version }}'
+#    ftp_common_link: "{{ lookup('env','STORAGE_AWS') }}/aem//aem-playbook/aem/dispatcher/dispatcher-\
+#    {{ dispatcher_module_version }}-apache-{{ apache_version }}"
     dispatcher_file: /opt/dispatcher.done
     semanage_sh_file: '{{ dispatcher_root }}/semanage.sh'
     dispatcher_any_location: '{{ apache_dir }}/conf'
