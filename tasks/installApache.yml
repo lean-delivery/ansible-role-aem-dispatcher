@@ -16,6 +16,8 @@
 - name: ensure that utils for SELinux managment are installed
   yum:
     name: policycoreutils-python
+  retry: 10
+  delay: 2
   become: True
 
 - name: ensure that centos-release-scl installed
