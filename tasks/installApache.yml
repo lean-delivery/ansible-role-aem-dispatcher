@@ -14,7 +14,7 @@
   become: True
 
 - name: ensure that utils for SELinux managment are installed
-  bacome: True
+  become: True
   package:
     name: policycoreutils-python
     state: present

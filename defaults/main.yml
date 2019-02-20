@@ -7,6 +7,7 @@ web_server_user: apache
 web_server_group: apache
 # Default admin email
 web_server_admin_email: root@localhost
+dispatcher_file: "/opt/dispatcher.done"
 
 # Default apache version
 apache_version: '2.4'
@@ -19,7 +20,7 @@ web_server_http_port: 80
 web_server_log_level: warn
 
 # Enable HTTPS by default or not
-web_server_ssl: false
+web_server_ssl: False
 # Default HTTPS port
 web_server_https_port: 443
 
@@ -38,4 +39,4 @@ dispatcher_module_version: '4.2.2'
 # debug(3): Debug
 # trace(4): Trace
 
-dispatcherLogLevel: warn
+dispatcher_log_level: warn

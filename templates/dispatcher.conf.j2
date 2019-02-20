@@ -47,7 +47,7 @@ LoadModule dispatcher_module modules/mod_dispatcher.so
 
 </IfModule>
 
-<VirtualHost {% if inventory_hostname == 'test-docker' %}127.0.0.1{% else %}{{ inventory_hostname }}{% endif %}:{% if web_server_ssl %}{{ web_server_https_port }}{% else %}{{ web_server_http_port }}{% endif %}>
+<VirtualHost *:{% if web_server_ssl %}{{ web_server_https_port }}{% else %}{{ web_server_http_port }}{% endif %}>
     DocumentRoot "{{ dispatcher_root }}"
     AllowEncodedSlashes On
 
