@@ -22,15 +22,21 @@
   until: installed_packages is succeeded
 
 - name: ensure that centos-release-scl installed
-  yum:
-    name: centos-release-scl
-  when: ansible_distribution_version == '6.8'
   become: True
+  package:
+    name: centos-release-scl
+    state: present
+  register: installed_packages
+  until: installed_packages is succeeded
+  when: ansible_distribution_version == '6.8'
 
 - name: ensure that httpd web-server is installed
-  yum:
-    name: '{{ apache_packages }}'
   become: True
+  package:
+    name: '{{ apache_packages }}'
+    state: present
+  register: installed_packages
+  until: installed_packages is succeeded
 
 - name: ensure that httpd is started
   service:
