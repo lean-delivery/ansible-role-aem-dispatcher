@@ -31,6 +31,15 @@
 #    - ansible_selinux.mode != 'disabled'
   become: True
 
+- name: Allow apache to do connections
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+  when:
+    - ansible_selinux.status == 'enabled'
+  become: True
+
 - name: ensure that centos-release-scl installed
   become: True
   package:
