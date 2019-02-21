@@ -29,6 +29,7 @@
   when:
     - ansible_selinux.status == 'enabled'
 #    - ansible_selinux.mode != 'disabled'
+  become: True
 
 - name: ensure that centos-release-scl installed
   become: True
