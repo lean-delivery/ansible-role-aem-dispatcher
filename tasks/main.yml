@@ -10,6 +10,13 @@
 - name: configure apache
   include: configureApache.yml
 
+- name: Allow apache to load module
+  sefcontext:
+    target:  /etc/httpd/modules/mod_dispatcher.so
+    setype: httpd_sys_script_exec_t
+    state: present
+
+
 - name: set facts
   include: set_facts.yml
 
