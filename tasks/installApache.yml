@@ -21,6 +21,15 @@
   register: installed_packages
   until: installed_packages is succeeded
 
+- name: Allow apache to load module
+  sefcontext:
+    target:  /etc/httpd/modules/mod_dispatcher.so
+    setype: httpd_sys_script_exec_t
+    state: present
+  when:
+    - ansible_selinux.status == 'enabled'
+#    - ansible_selinux.mode != 'disabled'
+
 - name: ensure that centos-release-scl installed
   become: True
   package:
