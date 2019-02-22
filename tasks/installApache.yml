@@ -34,8 +34,8 @@
 - name: Allow apache to do connections
   seboolean:
     name: httpd_can_network_connect
-    state: yes
-    persistent: yes
+    state: True
+    persistent: True
   when:
     - ansible_selinux.status == 'enabled'
   become: True
