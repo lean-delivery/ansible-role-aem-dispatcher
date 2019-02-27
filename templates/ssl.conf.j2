@@ -1,4 +1,4 @@
-{% if webServerSSL %}
+{% if web_server_ssl %}
 Listen {{ web_server_https_port }} https
 
 SSLPassPhraseDialog exec:/usr/libexec/httpd-ssl-pass-dialog
