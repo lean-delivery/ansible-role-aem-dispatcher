@@ -1,17 +1,13 @@
 ---
 # file: tasks/install.yml
 
-- name: 'ensure that group {{ web_server_user }} is present'
-  group:
-    name: '{{ web_server_user }}'
-  become: True
+- name: reinitialization of defaults as variables
+  set_fact:
+    apache_service: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
+    apache_dir: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
+    apache_packages:
+      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
 
-- name: 'ensure that user {{ web_server_user }} is present'
-  user:
-    name: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
-    comment: "Apache Web-server user"
-  become: True
 
 #- name: ensure that utils for SELinux managment are installed
 #  become: True
@@ -23,7 +19,7 @@
 
 - name: Allow apache to load module
   sefcontext:
-    target:  /etc/httpd/modules/mod_dispatcher.so
+    target: "/usr/lib/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','' ) }}modules/mod_dispatcher.so"
     setype: httpd_sys_script_exec_t
     state: present
   when:

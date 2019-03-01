@@ -1,14 +1,14 @@
 ---
 # file: tasks/main.yml
 
-- name: set facts for Apache
-  include: set_factsApache.yml
+#- name: set facts for Apache
+#  include: set_factsApache.yml
 
 - name: install apache
   include: installApache.yml
 
-- name: configure apache
-  include: configureApache.yml
+- name: "Choose platform based task"
+  include_tasks: "configureApache.yml"
 
 - name: set facts
   include: set_facts.yml
@@ -19,9 +19,7 @@
   register: dispatcher_done
 - block:
   - name: install Dispatcher
-    include: install.yml
-  - name: configure Dispatcher
-    include: configure.yml
+    include: "install_dispatcher_{{ ansible_os_family }}.yml"
   - name: save successfull installation in file
     file:
       path: '{{ dispatcher_file }}'

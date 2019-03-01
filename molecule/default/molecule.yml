@@ -16,7 +16,7 @@ platforms:
     groups:
       - rhel_family
       - aem_instances
-  - name: test-docker-ubuntu1804-jenkins
+  - name: test-docker-ubuntu1804-aem-dispatcher
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: True
     security_opts:
@@ -30,6 +30,7 @@ platforms:
       - SYS_ADMIN
     groups:
       - debian_family
+      - aem_instances
 provisioner:
   name: ansible
   log: True

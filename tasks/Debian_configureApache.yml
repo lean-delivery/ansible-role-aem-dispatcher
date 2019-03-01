@@ -1,0 +1,40 @@
+---
+# file: tasks/configure.yml
+
+- name: prepare all required variables
+  set_fact:
+    apache_dir: '/etc/apache2'
+    httpd_conf_file: '{{ apache_dir }}/apache2.conf'
+    ssl_conf_file: '{{ apache_dir }}/conf.d/ssl.conf'
+
+- name: ensure that httpd.conf is correct
+  template:
+    src: apache2.conf.j2
+    dest: '{{ httpd_conf_file }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
+  notify:
+  - restart httpd
+  become: True
+- meta: flush_handlers
+
+- name: ensure that ssl.conf is correct
+  template:
+    src: ssl.conf.j2
+    dest: '{{ ssl_conf_file }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
+  notify:
+  - restart httpd
+  when: web_server_ssl
+- meta: flush_handlers
+  become: true
+
+- name: ensure that directory for apache is ready
+  file:
+    path: '{{ apache_dir }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
+#    recurse: True
+    state: directory
+  become: True

@@ -1,0 +1,95 @@
+---
+# file: tasks/install.yml
+
+- name: 'ensure that {{ dispatcher_root }} path is ready'
+  file:
+    path: '{{ dispatcher_root }}'
+#    owner: '{{ web_server_user }}'
+#    group: '{{ web_server_group }}'
+    state: directory
+    mode: 0755
+#  when: ansible_facts['os_family'] == 'Debian'
+  become: true
+
+#- name: Create link to modules directory
+#  file:
+#    src: /usr/lib/apache2/modules
+#    dest: /etc/apache2/modules
+#    state: link
+#  when: ansible_facts['os_family'] == 'Debian'
+#  become: true
+
+- name: Ensure that 'conf' directory exists
+  file:
+    path: '{{ apache_dir }}/conf'
+    state: directory
+#  when: ansible_facts['os_family'] == 'Debian'
+  become: true
+
+- name: ensure that dispatcher module is present
+  get_url:
+    url: '{{ ftp_server_link }}'
+    dest: '/usr/lib/apache2/modules/mod_dispatcher.so'
+    owner: 'root'
+    group: 'root'
+    mode: 0644
+  become: True
+
+- name: ensure that dispatcher module is present
+  template:
+    src: 'dispatcher.load.j2'
+    dest: '{{ apache_dir }}/mods-available/dispatcher.load'
+    owner: 'root'
+    group: 'root'
+    mode: 0755
+  become: True
+
+- name: Enable dispatcher module
+  file:
+    src: '{{ apache_dir }}/mods-available/dispatcher.load'
+    dest: '{{ apache_dir }}/mods-enabled/dispatcher.load'
+    state: link
+#  when: ansible_facts['os_family'] == 'Debian'
+  become: true
+
+- name: ensure that dispatcher configuration files are ok
+  template:
+    src: '{{ item }}.j2'
+    dest: '{{ dispatcher_any_location }}/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: 0640
+  with_items:
+    - '{{ dispatcher_config_set }}'
+  notify:
+  - restart apache
+  become: True
+- meta: flush_handlers
+
+- name: ensure that main dispatcher configuration is ok
+  template:
+    src: dispatcher.conf.j2
+    dest: '{{ apache_dir }}/conf-available/dispatcher.conf'
+    owner: 'root'
+    group: 'root'
+    mode: 0640
+#  when: ansible_facts['os_family'] == 'Redhat'
+  become: True
+
+- name: Enable dispatcher configuration
+  file:
+    src: '{{ apache_dir }}/conf-available/dispatcher.conf'
+    dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
+    state: link
+
+- name: Enable dispatcher configuration
+  file:
+    src: '/var/log/apache2'
+    dest: '{{ apache_dir }}/logs'
+    state: link
+
+#  when: ansible_facts['os_family'] == 'Debian'
+  notify:
+  - restart apache
+  become: true
+- meta: flush_handlers

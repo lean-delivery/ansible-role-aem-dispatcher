@@ -15,7 +15,7 @@
     web_server_ssl: '{{ web_server_ssl }}'
     web_server_https_port: '{{ web_server_https_port }}'
 
-- name: prepare all required variables
-  set_fact:
-    httpd_conf_file: '{{ apache_dir }}/conf/httpd.conf'
-    ssl_conf_file: '{{ apache_dir }}/conf.d/ssl.conf'
+#- name: prepare all required variables
+#  set_fact:
+#    httpd_conf_file: '{{ apache_dir }}/conf/httpd.conf'
+#    ssl_conf_file: '{{ apache_dir }}/conf.d/ssl.conf'
