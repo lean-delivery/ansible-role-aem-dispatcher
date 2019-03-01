@@ -9,29 +9,29 @@
     state: directory
     mode: 0750
   when: ansible_facts['os_family'] == 'Debian'
-  become: true
+  become: True
 
-- name: Create link to modules directory
-  file:
-    src: /usr/lib/apache2/modules
-    dest: /etc/apache2/modules
-    state: link
-  when: ansible_facts['os_family'] == 'Debian'
-  become: true
+#- name: Create link to modules directory
+#  file:
+#    src: /usr/lib/apache2/modules
+#    dest: /etc/apache2/modules
+#    state: link
+#  when: ansible_facts['os_family'] == 'Debian'
+#  become: True
 
 - name: Create 'conf' directory
   file:
     path: '{{ apache_dir }}/conf'
     state: directory
   when: ansible_facts['os_family'] == 'Debian'
-  become: true
+  become: True
 
 - name: Create 'conf.d' directory
   file:
     path: '{{ apache_dir }}/conf.d'
     state: directory
   when: ansible_facts['os_family'] == 'Debian'
-  become: true
+  become: True
 
 - name: ensure that dispatcher module is present
   get_url:

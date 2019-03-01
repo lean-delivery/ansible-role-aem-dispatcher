@@ -9,7 +9,7 @@
     state: directory
     mode: 0755
 #  when: ansible_facts['os_family'] == 'Debian'
-  become: true
+  become: True
 
 #- name: Create link to modules directory
 #  file:
@@ -17,14 +17,14 @@
 #    dest: /etc/apache2/modules
 #    state: link
 #  when: ansible_facts['os_family'] == 'Debian'
-#  become: true
+#  become: True
 
 - name: Ensure that 'conf' directory exists
   file:
     path: '{{ apache_dir }}/conf'
     state: directory
 #  when: ansible_facts['os_family'] == 'Debian'
-  become: true
+  become: True
 
 - name: ensure that dispatcher module is present
   get_url:
@@ -50,7 +50,7 @@
     dest: '{{ apache_dir }}/mods-enabled/dispatcher.load'
     state: link
 #  when: ansible_facts['os_family'] == 'Debian'
-  become: true
+  become: True
 
 - name: ensure that dispatcher configuration files are ok
   template:
@@ -91,5 +91,5 @@
 #  when: ansible_facts['os_family'] == 'Debian'
   notify:
   - restart apache
-  become: true
+  become: True
 - meta: flush_handlers

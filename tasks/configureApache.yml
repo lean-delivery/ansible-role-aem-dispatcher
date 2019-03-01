@@ -27,7 +27,7 @@
 #  - restart httpd
 #  when: web_server_ssl
 #- meta: flush_handlers
-#  become: true
+#  become: True
 
 #- name: ensure that directory for apache is ready
 #  file:
