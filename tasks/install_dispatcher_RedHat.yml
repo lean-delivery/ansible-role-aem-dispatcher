@@ -41,3 +41,17 @@
     group: '{{ web_server_group }}'
     mode: 0755
   become: True
+
+- name: ensure that dispatcher configuration files are ok
+  template:
+    src: '{{ item }}.j2'
+    dest: '{{ dispatcher_any_location }}/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: 0640
+  with_items:
+    - '{{ dispatcher_config_set }}'
+  notify:
+  - restart apache
+  become: True
+- meta: flush_handlers
