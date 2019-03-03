@@ -9,17 +9,17 @@
       - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
 
 
-#- name: ensure that utils for SELinux managment are installed
-#  become: True
-#  package:
-#    name: policycoreutils-python
-#    state: present
-#  register: installed_packages
-#  until: installed_packages is succeeded
+- name: ensure that utils for SELinux managment are installed
+  become: True
+  package:
+    name: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'policycoreutils-python-utils','policycoreutils-python' ) }}"
+    state: present
+  register: installed_packages
+  until: installed_packages is succeeded
 
 - name: Allow apache to load module
   sefcontext:
-    target: "/usr/lib/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','' ) }}modules/mod_dispatcher.so"
+    target: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}/modules/mod_dispatcher.so"
     setype: httpd_sys_script_exec_t
     state: present
   when:

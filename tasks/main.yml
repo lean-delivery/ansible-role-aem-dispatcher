@@ -7,10 +7,10 @@
 - name: install apache
   include: installApache.yml
 
-- name: "Choose platform based task"
+- name: "Configuration of Apache"
   include_tasks: "configureApache.yml"
 
-- name: set facts
+- name: set facts for dispatcher
   include: set_facts.yml
 
 - name: check if service was installed before

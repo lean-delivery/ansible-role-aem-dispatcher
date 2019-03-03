@@ -30,11 +30,11 @@
 - meta: flush_handlers
   become: True
 
-- name: ensure that directory for apache is ready
-  file:
-    path: '{{ apache_dir }}'
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
+#- name: ensure that directory for apache is ready
+#  file:
+#    path: '{{ apache_dir }}'
+#    owner: '{{ web_server_user }}'
+#    group: '{{ web_server_group }}'
 #    recurse: True
-    state: directory
-  become: True
+#    state: directory
+#  become: True

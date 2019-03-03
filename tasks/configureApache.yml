@@ -3,7 +3,7 @@
 
 - name: prepare all required variables
   set_fact:
-    httpd_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}.conf"
+    httpd_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','conf/httpd' ) }}.conf"
     ssl_conf_file: '{{ apache_dir }}/conf.d/ssl.conf'
 
 - name: ensure that httpd.conf is correct
@@ -37,3 +37,4 @@
 #    recurse: True
 #    state: directory
 #  become: True
+#  when: ansible_os_family == 'RedHat'
