@@ -31,3 +31,20 @@ Docker aem-dispatcher:
     - molecule test -s default
   tags:
     - aws
+AWS aem-dispatcher:
+  variables:
+    AWS_REGION: us-east-1
+  stage: deployment test
+  script:
+    - molecule test -s cloud-aws-direct
+  tags:
+    - aws
+
+EPC java-8:
+  variables:
+    EPC_REGION: EPAM-BY2
+  stage: deployment test
+  script:
+    - molecule test -s cloud-epc-delegated
+  tags:
+    - delegated
