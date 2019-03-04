@@ -55,6 +55,7 @@ LoadModule dispatcher_module modules/mod_dispatcher.so
         <IfModule disp_apache2.c>
             ModMimeUsePathInfo On
             SetHandler dispatcher-handler
+            Require all granted
         </IfModule>
 
         AllowOverride None

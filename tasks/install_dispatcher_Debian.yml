@@ -80,6 +80,7 @@
     src: '{{ apache_dir }}/conf-available/dispatcher.conf'
     dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
     state: link
+    mode: 0755
   become: True
 
 - name: Create link to logs
