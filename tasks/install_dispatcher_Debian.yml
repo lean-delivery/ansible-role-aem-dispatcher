@@ -26,7 +26,7 @@
 #  when: ansible_facts['os_family'] == 'Debian'
   become: True
 
-- name: ensure that dispatcher module is present
+- name: ensure that mod_dispatcher.so is present
   get_url:
     url: '{{ ftp_server_link }}'
     dest: '/usr/lib/apache2/modules/mod_dispatcher.so'
@@ -35,7 +35,7 @@
     mode: 0644
   become: True
 
-- name: ensure that dispatcher module is present
+- name: Add dispatcher.load
   template:
     src: 'dispatcher.load.j2'
     dest: '{{ apache_dir }}/mods-available/dispatcher.load'
@@ -70,10 +70,9 @@
   template:
     src: dispatcher.conf.j2
     dest: '{{ apache_dir }}/conf-available/dispatcher.conf'
-    owner: 'root'
-    group: 'root'
+#    owner: 'root'
+#    group: 'root'
     mode: 0640
-#  when: ansible_facts['os_family'] == 'Redhat'
   become: True
 
 - name: Enable dispatcher configuration
