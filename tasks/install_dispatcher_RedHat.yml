@@ -23,6 +23,9 @@
     state: directory
     mode: 0755
   become: True
+  notify:
+  - restart apache
+- meta: flush_handlers
 
 - name: ensure that dispatcher module is present
   get_url:
@@ -32,6 +35,9 @@
     group: '{{ web_server_group }}'
     mode: 0755
   become: True
+  notify:
+  - restart apache
+- meta: flush_handlers
 
 - name: ensure that main dispatcher configuration is ok
   template:
