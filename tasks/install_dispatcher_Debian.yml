@@ -80,13 +80,13 @@
     src: '{{ apache_dir }}/conf-available/dispatcher.conf'
     dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
     state: link
+  become: True
 
-- name: Enable dispatcher configuration
+- name: Create link to logs
   file:
     src: '/var/log/apache2'
     dest: '{{ apache_dir }}/logs'
     state: link
-
 #  when: ansible_facts['os_family'] == 'Debian'
   notify:
   - restart apache
