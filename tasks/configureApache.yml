@@ -11,8 +11,8 @@
   template:
     src: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}.conf.j2"
     dest: "{{ httpd_conf_file }}"
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
   notify:
   - restart apache
 - meta: flush_handlers

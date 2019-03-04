@@ -45,6 +45,6 @@ EPC aem-dispatcher:
     EPC_REGION: EPAM-BY2
   stage: deployment test
   script:
-    - molecule test -s cloud-epc-delegated
+    - molecule test --debug -s cloud-epc-delegated
   tags:
     - delegated

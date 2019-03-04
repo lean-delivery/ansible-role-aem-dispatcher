@@ -8,7 +8,7 @@
     dest: '{{ dispatcher_any_location }}/{{ item }}'
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
-    mode: 0640
+    mode: 0755
   with_items:
     - '{{ dispatcher_config_set }}'
   notify:
@@ -30,15 +30,6 @@
     dest: '{{ apache_dir }}/modules/mod_dispatcher.so'
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
-    mode: 0644
-  become: True
-
-- name: ensure that dispatcher module is present
-  get_url:
-    url: '{{ ftp_server_link }}'
-    dest: '{{ apache_dir }}/modules/mod_dispatcher.so'
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
     mode: 0755
   become: True
 
@@ -48,7 +39,7 @@
     dest: '{{ apache_dir }}/conf.d/dispatcher.conf'
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
-    mode: 0640
+    mode: 0755
   notify:
   - restart apache
   become: True
