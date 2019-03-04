@@ -40,7 +40,7 @@ AWS aem-dispatcher:
   tags:
     - aws
 
-EPC java-8:
+EPC aem-dispatcher:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

@@ -17,6 +17,7 @@ platforms:
     wait_timeout: 3600
     groups:
       - rhel_family
+      - aem_instances
   - name: test-epc-ubuntu1804-aem-dispatcher
     image: Ubuntu18.04_64-bit
     shape: small
@@ -24,6 +25,7 @@ platforms:
     wait_timeout: 3600
     groups:
       - debian_family
+      - aem_instances
 provisioner:
   name: ansible
   log: True
