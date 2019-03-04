@@ -72,7 +72,7 @@
     dest: '{{ apache_dir }}/conf-available/dispatcher.conf'
 #    owner: 'root'
 #    group: 'root'
-    mode: 0640
+    mode: 0755
   become: True
 
 - name: Enable dispatcher configuration
