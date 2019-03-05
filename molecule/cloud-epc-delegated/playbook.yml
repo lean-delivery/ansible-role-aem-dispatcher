@@ -3,4 +3,3 @@
   hosts: all
   roles:
     - role: ansible-role-aem-dispatcher
-      ftp_server_link: "{{ lookup('env','STORAGE_AWS') }}/aem"
