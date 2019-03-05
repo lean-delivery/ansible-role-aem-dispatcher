@@ -8,7 +8,7 @@
 
 - name: variables preparation
   set_fact:
-    ftp_common_link: "{{ lookup('env','STORAGE_AWS') }}/dispatcher/dispatcher-\
+    ftp_common_link: "{{ lookup('env','STORAGE_AWS') }}dispatcher/dispatcher-\
     {{ dispatcher_module_version }}-apache-{{ apache_version }}"
     semanage_sh_file: '{{ dispatcher_root }}/semanage.sh'
     dispatcher_any_location: '{{ apache_dir }}/conf'
