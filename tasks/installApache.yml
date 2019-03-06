@@ -17,12 +17,12 @@
   register: installed_packages
   until: installed_packages is succeeded
 
-- name: Temporary disable selinux
-  become: True
-  selinux:
-    state: disabled
-  when:
-    - ansible_selinux.status == 'enabled'
+#- name: Temporary disable selinux
+#  become: True
+#  selinux:
+#    state: disabled
+#  when:
+#    - ansible_selinux.status == 'enabled'
 
 
 - name: Allow apache to load module
