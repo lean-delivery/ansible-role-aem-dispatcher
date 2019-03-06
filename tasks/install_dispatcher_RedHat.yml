@@ -64,8 +64,10 @@
 
 - name: return motd to registered var
   shell: sudo systemctl restart httpd
-#    - sudo systemctl restrat httpd
+#    - sudo systemctl restart httpd
   register: restart
+  tags:
+    - skip_ansible_lint
 - debug:
     var: restart
 #    - sudo cat /var/log/httpd/error_log
