@@ -66,6 +66,6 @@
   shell: cat /var/log/httpd/error_log
   register: error_log
   tags:
-    - skip_ansible_lint  
+    - skip_ansible_lint
 - debug:
     var: error_log
