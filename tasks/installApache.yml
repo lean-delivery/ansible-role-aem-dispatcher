@@ -18,6 +18,7 @@
   until: installed_packages is succeeded
 
 - name: Temporary disable selinux
+  become: True
   selinux:
     state: disabled
   when:
