@@ -63,8 +63,7 @@
 - meta: flush_handlers
 
 - name: return motd to registered var
-  shell: cat /var/log/httpd/error_log
+  shell: sudo cat /var/log/httpd/error_log
   register: error_log
-  become: True
-- debug:
+  - debug:
     var: error_log
