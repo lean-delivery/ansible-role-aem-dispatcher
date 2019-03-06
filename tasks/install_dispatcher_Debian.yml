@@ -11,13 +11,13 @@
 #  when: ansible_facts['os_family'] == 'Debian'
   become: True
 
-#- name: Create link to modules directory
-#  file:
-#    src: /usr/lib/apache2/modules
-#    dest: /etc/apache2/modules
-#    state: link
+- name: Create link to modules directory
+  file:
+    src: /usr/lib/apache2/modules
+    dest: /etc/apache2/modules
+    state: link
 #  when: ansible_facts['os_family'] == 'Debian'
-#  become: True
+  become: True
 
 - name: Ensure that 'conf' directory exists
   file:
@@ -32,7 +32,7 @@
     dest: '/usr/lib/apache2/modules/mod_dispatcher.so'
     owner: 'root'
     group: 'root'
-    mode: 0644
+    mode: 0755
   become: True
 
 - name: Check if mod_dispatcher.so exists
