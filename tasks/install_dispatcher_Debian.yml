@@ -37,20 +37,11 @@
 
 - name: Check if mod_dispatcher.so exists
   stat:
-    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
+    path: '/usr/lib/apache2/modules/mod_dispatcher.so'
   register: st
 - debug:
     msg: "{{ st.stat }}"
 
-- name: Allow apache to load module
-  sefcontext:
-    target: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}/modules/mod_dispatcher.so"
-    setype: httpd_sys_script_exec_t
-    state: present
-  when:
-    - ansible_selinux.status == 'enabled'
-#    - ansible_selinux.mode != 'disabled'
-  become: True
 
 - name: Add dispatcher.load
   template:
@@ -78,10 +69,8 @@
     mode: 0640
   with_items:
     - '{{ dispatcher_config_set }}'
-  notify:
-  - restart apache
   become: True
-- meta: flush_handlers
+
 
 - name: ensure that main dispatcher configuration is ok
   template:
