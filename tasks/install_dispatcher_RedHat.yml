@@ -27,6 +27,7 @@
   - restart apache
 - meta: flush_handlers
 
+
 - name: ensure that dispatcher module is present
   get_url:
     url: '{{ ftp_server_link }}'
@@ -35,9 +36,14 @@
     group: '{{ web_server_group }}'
     mode: 0755
   become: True
-  notify:
-  - restart apache
-- meta: flush_handlers
+
+- name: Check if mod_dispatcher.so exists
+  stat:
+    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
+  register: st
+- debug:
+    msg: "{{ st.stat }}"
+  #when: not st.stat.exists
 
 - name: ensure that main dispatcher configuration is ok
   template:

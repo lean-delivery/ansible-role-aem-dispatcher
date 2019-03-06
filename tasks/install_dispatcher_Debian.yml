@@ -35,6 +35,13 @@
     mode: 0644
   become: True
 
+- name: Check if mod_dispatcher.so exists
+  stat:
+    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
+  register: st
+- debug:
+    msg: "{{ st.stat }}"
+
 - name: Add dispatcher.load
   template:
     src: 'dispatcher.load.j2'
