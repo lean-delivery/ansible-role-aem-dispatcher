@@ -31,7 +31,8 @@
 - name: ensure that dispatcher module is present
   get_url:
     url: '{{ ftp_server_link }}'
-    dest: '{{ apache_dir }}/modules/mod_dispatcher.so'
+#    dest: '{{ apache_dir }}/modules/mod_dispatcher.so'
+    dest: '/tmp/mod_dispatcher.so'
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
     mode: 0755
@@ -39,7 +40,8 @@
 
 - name: Check if mod_dispatcher.so exists
   stat:
-    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
+#    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
+    path: '/tmp/mod_dispatcher.so'
   register: st
 - debug:
     msg: "{{ st.stat }}"
