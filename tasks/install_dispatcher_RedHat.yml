@@ -63,7 +63,9 @@
 - meta: flush_handlers
 
 - name: return motd to registered var
-  shell: sudo cat /var/log/httpd/error_log
+  shell: cat /var/log/httpd/error_log
   register: error_log
-  - debug:
+  tags:
+    - skip_ansible_lint  
+- debug:
     var: error_log
