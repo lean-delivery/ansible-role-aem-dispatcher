@@ -62,9 +62,10 @@
   become: True
 #- meta: flush_handlers
 
-- name: return motd to registered var
-  shell: sudo systemctl restart httpd
+- name: return to registered var
+  shell: sudo systemctl restart httpd & systemctl status httpd
 #    - sudo systemctl restart httpd
+#    - systemctl status httpd
   register: restart
   tags:
     - skip_ansible_lint
