@@ -40,11 +40,11 @@ AWS aem-dispatcher:
   tags:
     - aws
 
-EPC aem-dispatcher:
-  variables:
-    EPC_REGION: EPAM-BY2
-  stage: deployment test
-  script:
-    - molecule test -s cloud-epc-delegated
-  tags:
-    - delegated
+#EPC aem-dispatcher:
+#  variables:
+#    EPC_REGION: EPAM-BY2
+#  stage: deployment test
+#  script:
+#    - molecule test -s cloud-epc-delegated
+#  tags:
+#    - delegated
