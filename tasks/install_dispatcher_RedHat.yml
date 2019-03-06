@@ -32,12 +32,12 @@
     mode: 0755
   become: True
 
-- name: Check if mod_dispatcher.so exists
-  stat:
-    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
-  register: st
-- debug:
-    msg: "{{ st.stat }}"
+#- name: Check if mod_dispatcher.so exists
+#  stat:
+#    path: '{{ apache_dir }}/modules/mod_dispatcher.so'
+#  register: st
+#- debug:
+#    msg: "{{ st.stat }}"
   #when: not st.stat.exists
 
 - name: Allow apache to load module
@@ -47,7 +47,7 @@
     state: present
   when:
     - ansible_selinux.status == 'enabled'
-#    - ansible_selinux.mode != 'disabled'
+    - ansible_selinux.mode != 'disabled'
   become: True
 
 - name: ensure that main dispatcher configuration is ok
@@ -57,23 +57,23 @@
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
     mode: 0755
-#  notify:
-#  - restart apache
+  notify:
+  - restart apache
   become: True
-#- meta: flush_handlers
+- meta: flush_handlers
 
-- name: return to registered var
-  shell: sudo systemctl restart httpd & systemctl status httpd
+#- name: return to registered var
+#  shell: sudo systemctl restart httpd & systemctl status httpd & journalctl -xe
 #    - sudo systemctl restart httpd
 #    - systemctl status httpd
-  register: restart
-  tags:
-    - skip_ansible_lint
-- debug:
-    var: restart
+#  register: restart
+#  tags:
+#    - skip_ansible_lint
+#- debug:
+#    var: restart
 #    - sudo cat /var/log/httpd/error_log
 #  register: error_log
-  tags:
-    - skip_ansible_lint
+#  tags:
+#    - skip_ansible_lint
 #- debug:
 #    var: error_log
