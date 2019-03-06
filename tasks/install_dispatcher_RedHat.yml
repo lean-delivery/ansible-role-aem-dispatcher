@@ -61,3 +61,10 @@
   - restart apache
   become: True
 - meta: flush_handlers
+
+- name: return motd to registered var
+  command: cat /var/log/httpd/error_log
+  register: error_log
+  become: True
+- debug:
+    var: error_log
