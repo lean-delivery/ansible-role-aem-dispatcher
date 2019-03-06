@@ -70,7 +70,7 @@
     var: restart
 #    - sudo cat /var/log/httpd/error_log
 #  register: error_log
-#  tags:
-#    - skip_ansible_lint
+  tags:
+    - skip_ansible_lint
 #- debug:
 #    var: error_log
