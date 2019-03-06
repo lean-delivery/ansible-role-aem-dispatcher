@@ -57,15 +57,20 @@
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
     mode: 0755
-  notify:
-  - restart apache
+#  notify:
+#  - restart apache
   become: True
-- meta: flush_handlers
+#- meta: flush_handlers
 
 - name: return motd to registered var
-  shell: cat /var/log/httpd/error_log
-  register: error_log
-  tags:
-    - skip_ansible_lint
+  shell: sudo systemctl restart httpd
+#    - sudo systemctl restrat httpd
+  register: restart
 - debug:
-    var: error_log
+    var: restart
+#    - sudo cat /var/log/httpd/error_log
+#  register: error_log
+#  tags:
+#    - skip_ansible_lint
+#- debug:
+#    var: error_log
