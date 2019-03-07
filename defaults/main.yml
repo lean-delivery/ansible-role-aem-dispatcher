@@ -12,6 +12,8 @@ dispatcher_file: "/opt/dispatcher.done"
 # Default apache version
 apache_version: '2.4'
 
+ftp_link: ftp:/
+
 # Default apache port
 web_server_http_port: 80
 
