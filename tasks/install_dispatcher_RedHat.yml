@@ -61,7 +61,7 @@
   - restart apache
   become: True
 - meta: flush_handlers
-  ignore_errors: yes
+  ignore_errors: True
 
 - name: return to registered var
   shell: sudo /var/log/httpd/error/log
