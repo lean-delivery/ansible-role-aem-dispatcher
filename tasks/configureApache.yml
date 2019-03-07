@@ -20,7 +20,7 @@
 - name: Disable Firewalld
   service:
     name: firewalld
-    state: stop
+    state: stopped
   become: True
 
 #- name: ensure that ssl.conf is correct
