@@ -61,16 +61,17 @@
   - restart apache
   become: True
 - meta: flush_handlers
+  ignore_errors: yes
 
-#- name: return to registered var
-#  shell: sudo systemctl restart httpd & systemctl status httpd & journalctl -xe
+- name: return to registered var
+  shell: sudo /var/log/httpd/error/log
 #    - sudo systemctl restart httpd
 #    - systemctl status httpd
-#  register: restart
-#  tags:
-#    - skip_ansible_lint
-#- debug:
-#    var: restart
+  register: restart
+  tags:
+    - skip_ansible_lint
+- debug:
+    var: restart
 #    - sudo cat /var/log/httpd/error_log
 #  register: error_log
 #  tags:
