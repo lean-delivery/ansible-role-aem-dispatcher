@@ -63,7 +63,7 @@
 - meta: flush_handlers
   ignore_errors: True
 
-- name: return to registered var
+- name: Read Apache logs
   shell: sudo cat /var/log/httpd/error_log
 #    - sudo systemctl restart httpd
 #    - systemctl status httpd
@@ -72,6 +72,15 @@
     - skip_ansible_lint
 - debug:
     var: restart
+
+- name: Read Apache logs
+  shell: sudo cat /var/log/httpd/dispatcher.log
+  register: dispatcher_log
+  tags:
+    - skip_ansible_lint
+- debug:
+    var: dispatcher_log
+
 #    - sudo cat /var/log/httpd/error_log
 #  register: error_log
 #  tags:
