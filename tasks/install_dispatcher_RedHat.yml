@@ -64,7 +64,7 @@
   ignore_errors: True
 
 - name: return to registered var
-  shell: sudo cat /var/log/httpd/error/log
+  shell: sudo cat /var/log/httpd/error_log
 #    - sudo systemctl restart httpd
 #    - systemctl status httpd
   register: restart
