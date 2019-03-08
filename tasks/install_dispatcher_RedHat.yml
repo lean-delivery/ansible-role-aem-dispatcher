@@ -67,11 +67,11 @@
   shell: sudo cat /var/log/httpd/error_log
 #    - sudo systemctl restart httpd
 #    - systemctl status httpd
-#  register: restart
+  register: restart
   tags:
     - skip_ansible_lint
-#- debug:
-#    var: restart
+- debug:
+    var: restart
 
 - name: Read Apache logs
   shell: sudo cat /var/log/httpd/dispatcher.log

@@ -8,7 +8,6 @@
     apache_packages:
       - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
 
-
 - name: ensure that utils for SELinux managment are installed
   become: True
   package:
@@ -23,6 +22,7 @@
   become: True
   selinux:
     state: disabled
+  reboot:
   when:
     - ansible_selinux.status == 'enabled'
 
