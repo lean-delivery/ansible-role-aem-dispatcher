@@ -18,11 +18,19 @@
   register: installed_packages
   until: installed_packages is succeeded
 
-- name: Temporary disable selinux
-  become: True
-  selinux:
-    state: disabled
-  reboot:
+#- name: Temporary disable selinux
+#  become: True
+#  selinux:
+#    state: disabled
+#  reboot:
+#  when:
+#    - ansible_selinux.status == 'enabled'
+
+- name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
   when:
     - ansible_selinux.status == 'enabled'
 
