@@ -21,6 +21,7 @@
   become: True
   selinux:
     state: disabled
+    reboot_required: False
   when:
     - ansible_selinux.status == 'enabled'
 
