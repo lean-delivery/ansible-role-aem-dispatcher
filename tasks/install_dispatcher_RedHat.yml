@@ -51,6 +51,7 @@
   become: True
 
 - name: ensure that main dispatcher configuration is ok
+  become: True
   template:
     src: dispatcher.conf.j2
     dest: '{{ apache_dir }}/conf.d/dispatcher.conf'
@@ -59,7 +60,6 @@
     mode: 0755
   notify:
   - restart apache
-  become: True
 - meta: flush_handlers
   ignore_errors: True
 

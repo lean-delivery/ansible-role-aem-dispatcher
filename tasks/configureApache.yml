@@ -17,12 +17,6 @@
   - restart apache
 - meta: flush_handlers
 
-- name: Disable Firewalld
-  service:
-    name: firewalld
-    state: stopped
-  become: True
-
 #- name: ensure that ssl.conf is correct
 #  template:
 #    src: ssl.conf.j2
