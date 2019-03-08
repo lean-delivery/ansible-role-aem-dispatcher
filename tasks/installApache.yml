@@ -20,7 +20,7 @@
 - name: Temporary disable selinux
   become: True
   selinux:
-    state: 
+    state:
       - disabled
       - reboot_required: False
   when:
