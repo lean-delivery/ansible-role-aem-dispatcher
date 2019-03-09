@@ -1,5 +1,7 @@
 ---
 - name: Converge
   hosts: aem_instances
+  vars:
+    render: localhost
   roles:
     - role: ansible-role-aem-dispatcher
