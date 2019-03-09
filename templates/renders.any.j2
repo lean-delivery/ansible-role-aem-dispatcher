@@ -1,5 +1,5 @@
 /rend01
     {
-	    /hostname "{{ dispatcher_back[0] }}"
+	    /hostname "localhost"
 	    /port "{% if hostvars[dispatcher_back[0]]['aem_instance_port'] is defined %}{{ hostvars[dispatcher_back[0]]['aem_instance_port'] }}{% else %}{{ aem_instance_port }}{% endif %}"
   	}
