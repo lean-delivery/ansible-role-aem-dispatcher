@@ -24,7 +24,7 @@ web_server_ssl: False
 # Default HTTPS port
 web_server_https_port: 443
 
-aem_instance_port: 4502
+aem_instance_port: 80
 
 # Dispatcher cache folder
 dispatcher_root: /opt/aemDispatcherCache
