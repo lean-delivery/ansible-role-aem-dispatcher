@@ -18,14 +18,6 @@
   register: installed_packages
   until: installed_packages is succeeded
 
-#- name: Temporary disable selinux
-#  become: True
-#  selinux:
-#    state: disabled
-#  reboot:
-#  when:
-#    - ansible_selinux.status == 'enabled'
-
 - name: Selinux permissive
   become: True
   selinux:
@@ -33,7 +25,6 @@
     state: permissive
   when:
     - ansible_selinux.status == 'enabled'
-
 
 - name: Allow apache to load module
   sefcontext:
