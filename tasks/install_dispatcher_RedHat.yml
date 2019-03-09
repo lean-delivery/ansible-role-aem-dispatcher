@@ -68,11 +68,11 @@
   shell: cat /var/log/httpd/error_log
 #    - sudo systemctl restart httpd
 #    - systemctl status httpd
-  register: restart
+  register: apache_log
   tags:
     - skip_ansible_lint
 - debug:
-    var: restart
+    var: apache_log
 
 - name: Read dispatcher logs
   become: True
@@ -83,14 +83,14 @@
 - debug:
     var: dispatcher_log
 
-- name: Read audit logs
-  become: True
-  shell: cat /var/log/audit/audit.log
-  register: audit_log
-  tags:
-    - skip_ansible_lint
-- debug:
-    var: audit_log
+#- name: Read audit logs
+#  become: True
+#  shell: cat /var/log/audit/audit.log
+#  register: audit_log
+#  tags:
+#    - skip_ansible_lint
+#- debug:
+#    var: audit_log
 
 #    - sudo cat /var/log/httpd/error_log
 #  register: error_log

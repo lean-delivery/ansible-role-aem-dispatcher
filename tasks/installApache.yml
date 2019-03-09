@@ -31,7 +31,8 @@
   selinux:
     policy: targeted
     state: permissive
-
+  when:
+    - ansible_selinux.status == 'enabled'
 
 
 - name: Allow apache to load module
