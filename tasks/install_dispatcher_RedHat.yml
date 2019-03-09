@@ -83,7 +83,16 @@
 - debug:
     var: dispatcher_log
 
-#- name: Read audit logs
+- name: Read renders.any
+  become: True
+  shell: cat /etc/httpd/conf/renders.any
+  register: renders_any
+  tags:
+    - skip_ansible_lint
+- debug:
+    var: renders_any
+
+    #- name: Read audit logs
 #  become: True
 #  shell: cat /var/log/audit/audit.log
 #  register: audit_log
