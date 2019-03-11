@@ -40,7 +40,6 @@ platforms:
       - debian_family
       - aem_instances
 
-
 provisioner:
   name: ansible
   log: False

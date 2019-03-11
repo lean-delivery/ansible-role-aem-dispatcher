@@ -8,22 +8,23 @@
     apache_packages:
       - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
 
-
 - name: ensure that utils for SELinux managment are installed
   become: True
   package:
-    name: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'policycoreutils-python-utils','policycoreutils-python' ) }}"
+    name:
+      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'policycoreutils-python-utils','policycoreutils-python' ) }}"
+      - selinux-policy
     state: present
   register: installed_packages
   until: installed_packages is succeeded
 
-#- name: Temporary disable selinux
-#  become: True
-#  selinux:
-#    state: disabled
-#  when:
-#    - ansible_selinux.status == 'enabled'
-
+- name: Selinux permissive
+  become: True
+  selinux:
+    policy: targeted
+    state: permissive
+  when:
+    - ansible_selinux.status == 'enabled'
 
 - name: Allow apache to load module
   sefcontext:

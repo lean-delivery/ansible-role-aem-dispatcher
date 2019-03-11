@@ -35,13 +35,6 @@
     mode: 0755
   become: True
 
-- name: Check if mod_dispatcher.so exists
-  stat:
-    path: '/usr/lib/apache2/modules/mod_dispatcher.so'
-  register: st
-- debug:
-    msg: "{{ st.stat }}"
-
 - name: Allow apache to load module
   sefcontext:
     target: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}/modules/mod_dispatcher.so"
@@ -80,7 +73,6 @@
     - '{{ dispatcher_config_set }}'
   become: True
 
-
 - name: ensure that main dispatcher configuration is ok
   template:
     src: dispatcher.conf.j2
@@ -103,7 +95,6 @@
     src: '/var/log/apache2'
     dest: '{{ apache_dir }}/logs'
     state: link
-#  when: ansible_facts['os_family'] == 'Debian'
   notify:
   - restart apache
   become: True
