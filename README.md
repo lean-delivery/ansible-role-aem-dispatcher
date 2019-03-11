@@ -65,6 +65,7 @@ Example Playbook
   roles:
     - role: ansible-role-aem-dispatcher
   vars:
+    ftp_link: ftp://example.com
     aemInstancePort: 4502
     render: localhost
 ```
