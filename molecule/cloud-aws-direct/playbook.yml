@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   vars:
+    ftp_link: "{{ lookup('env','STORAGE_AWS') }}"
     render: localhost
   roles:
     - role: ansible-role-aem-dispatcher
