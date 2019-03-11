@@ -17,22 +17,32 @@ Apache httpd server version 2.2 or 2.4.
 Role Variables
 --------------
 
-----------------------------------------------------------------------------------------------------------------------------------------|
-| Variable         				| Required	| Default	| Choices/Values   						| Comments				   	   			|
-|-------------------------------|-----------|-----------|---------------------------------------|---------------------------------------|
-|webServerUser					| yes		| true		|[string]								|default value is apache				|
-|webServerGroup					| yes		| true		|[string]								|default value is apache				|
-|webServerAdminEmail			| yes		| true		|[string]								|default value is root@localhost		|
-|apacheVersion					| yes		| true		|[string]								|default value is '2.4'					|
-|webServerHTTPPort				| yes		| true		|[int]									|default value is 80					|
-|webServerLogLevel				| yes		| true		|[warn,notice,info,debug,error,notice]	|default value is warn					|
-|webServerSSL					| yes		| true		|true\false								|default value is false					|
-|webServerHTTPsPort				| no		| true		|[int]									|default value is 443					|
-| dispatcher_root         		| yes		| true		|[string] 	  							|default value is /opt/aemDispatcherCache|
-| dispatcher_module_version  	| yes		| true		|[string]								|default value is '4.2.2'				|
-| dispatcherLogLevel      		| yes		| true		|error/warn/error/info/debug/trace		|default value is warn		 			|
-| aem_instance_port				| yes		| false		|[int]									|port for connection to aem instance	|
-| render                		| no		| false		|[comma-sep list]   					|list of renders for this dispatcher	|
+
+  - `web_server_user` - Apache server user   
+    default: `apache`
+  - `web_server_group` - Apache server user's group   
+    default: `apache`
+  - `web_server_admin_email` - Admin's email   
+    default: `root@localhost`
+  - `apache_version` - Apche server version   
+    default: `2.4`
+  - `web_server_http_port` - Port for connection to Apache without ssl   
+    default: `80`
+  - `web_server_log_level` - Apache's log level (possible values are: warn,notice,info,debug,error,notice)   
+    default: `warn`
+  - `web_server_ssl` - Enable or disable ssl on Apache   
+    default: `false`
+  - `web_server_https_port` - SSl port for Apache  
+    default: `443`
+  - `dispatcher_root` - Dispatcher's directory   
+    default: `/opt/aemDispatcherCache`
+  - `dispatcher_module_version` - Version of Dispatcher module   
+    default: `4.2.2`
+  - `dispatcher_log_level` - Dispatcher's log level (possible values are: error, warn, error, info, debug, trace)   
+    default: `warn`
+  - `aem_instance_port` - Port on which Dispatcher connects to AEM instances   
+    default: `4502`
+  - `render` - list of renders for this dispatcher
 
 
 
