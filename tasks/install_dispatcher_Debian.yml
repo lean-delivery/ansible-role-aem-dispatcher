@@ -72,6 +72,8 @@
   with_items:
     - '{{ dispatcher_config_set }}'
   become: True
+  notify:
+    - restart apache
 
 - name: ensure that main dispatcher configuration is ok
   template:
