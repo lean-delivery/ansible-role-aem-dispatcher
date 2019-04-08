@@ -1,19 +1,6 @@
 ---
 # file: tasks/install.yml
 
-- name: ensure that dispatcher configuration files are ok
-  become: True
-  template:
-    src: '{{ item }}.j2'
-    dest: '{{ dispatcher_any_location }}/{{ item }}'
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
-    mode: 0755
-  with_items:
-    - '{{ dispatcher_config_set }}'
-  notify:
-    - restart apache
-
 - name: 'ensure that {{ dispatcher_root }} path is ready'
   file:
     path: '{{ dispatcher_root }}'
@@ -52,4 +39,3 @@
     mode: 0755
   notify:
     - restart apache
-  

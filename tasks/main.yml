@@ -10,6 +10,9 @@
 - name: set facts for dispatcher
   include: set_facts.yml
 
+- name: change dispatcher configs
+  include: dispatcher_configs.yml
+
 - name: check if service was installed before
   stat:
     path: '{{ dispatcher_file }}'
