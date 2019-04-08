@@ -11,6 +11,8 @@
     mode: 0755
   with_items:
     - '{{ dispatcher_config_set }}'
+  notify:
+    - restart apache
 
 - name: 'ensure that {{ dispatcher_root }} path is ready'
   file:
@@ -49,5 +51,5 @@
     group: '{{ web_server_group }}'
     mode: 0755
   notify:
-  - restart apache
+    - restart apache
   
