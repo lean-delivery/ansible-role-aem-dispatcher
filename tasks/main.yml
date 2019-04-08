@@ -23,3 +23,5 @@
       state: touch
     become: True
   when: not dispatcher_done.stat.exists
+
+- meta: flush_handlers
