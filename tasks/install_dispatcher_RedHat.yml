@@ -51,14 +51,5 @@
   notify:
   - restart apache
 
-- name: debug
-  debug:
-    msg: "{{ apache_service }}"
 - meta: flush_handlers
 
-- name: restart apache
-  service:
-      name: '{{ apache_service }}'
-      state: restarted
-  become: True
-  ignore_errors: True
