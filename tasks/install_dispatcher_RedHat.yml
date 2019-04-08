@@ -50,6 +50,4 @@
     mode: 0755
   notify:
   - restart apache
-
-- meta: flush_handlers
-
+  
