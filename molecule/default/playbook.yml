@@ -1,8 +1,10 @@
 ---
 - name: Converge
-  hosts: aem_instances
+  hosts: dispatcher_back
   vars:
     ftp_link: "{{ lookup('env','STORAGE_AWS') }}"
     render: localhost
+    aem_publishers:
+      - localhost
   roles:
     - role: ansible-role-aem-dispatcher

@@ -15,7 +15,8 @@ platforms:
     privileged: True
     groups:
       - rhel_family
-      - aem_instances
+      - dispatcher_back
+      - aem_publishers
   - name: test-docker-ubuntu1804-aem-dispatcher
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: True
@@ -30,7 +31,8 @@ platforms:
       - SYS_ADMIN
     groups:
       - debian_family
-      - aem_instances
+      - dispatcher_back
+      - aem_publishers
 provisioner:
   name: ansible
   log: True

@@ -24,6 +24,8 @@ platforms:
     groups:
       - rhel_family
       - aem_instances
+      - dispatcher_back
+      - aem_publishers
 
   - name: test-aws-ubuntu18-aem-dispatcher
     image: ami-012fd5eb46f56731f
@@ -39,6 +41,8 @@ platforms:
     groups:
       - debian_family
       - aem_instances
+      - dispatcher_back
+      - aem_publishers
 
 provisioner:
   name: ansible
