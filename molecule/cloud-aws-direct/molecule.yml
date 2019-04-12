@@ -23,7 +23,6 @@ platforms:
     ssh_user: centos
     groups:
       - rhel_family
-      - aem_instances
       - dispatcher_back
       - aem_publishers
 
@@ -40,7 +39,6 @@ platforms:
     ssh_user: ubuntu
     groups:
       - debian_family
-      - aem_instances
       - dispatcher_back
       - aem_publishers
 
