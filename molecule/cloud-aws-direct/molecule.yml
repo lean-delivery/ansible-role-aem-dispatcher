@@ -49,6 +49,7 @@ platforms:
       - SYS_ADMIN
     groups:
       - debian_family
+      - aem_instances
       - dispatcher_back
       - aem_publishers
 
