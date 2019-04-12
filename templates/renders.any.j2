@@ -1,5 +1,7 @@
-/rend01
+{% for render in groups['aem_publishers'] %}
+/rend0{{ loop.index }}
     {
-	    /hostname "{{ dispatcher_back[0] }}"
-	    /port "{% if hostvars[dispatcher_back[0]]['aem_instance_port'] is defined %}{{ hostvars[dispatcher_back[0]]['aem_instance_port'] }}{% else %}{{ aem_instance_port }}{% endif %}"
+	    /hostname "{{ render }}"
+	    /port "{{ aem_instance_port }}"
   	}
+{% endfor %}
