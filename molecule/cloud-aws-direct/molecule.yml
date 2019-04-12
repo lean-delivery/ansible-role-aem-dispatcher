@@ -38,9 +38,17 @@ platforms:
     spot_price: 0.04
     wait_timeout: 1800
     ssh_user: ubuntu
+    security_opts:
+      - seccomp=unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    tmpfs:
+      - /tmp
+      - /run
+    capabilities:
+      - SYS_ADMIN
     groups:
       - debian_family
-      - aem_instances
       - dispatcher_back
       - aem_publishers
 
