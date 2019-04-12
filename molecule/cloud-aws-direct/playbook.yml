@@ -1,4 +1,9 @@
 ---
+- name: add host to group 'just_created' with variable foo=42
+  add_host:
+    name: localhost
+    groups: aem_publishers
+
 - name: Converge
   hosts: dispatcher_back
   vars:
