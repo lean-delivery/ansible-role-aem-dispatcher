@@ -23,8 +23,8 @@ platforms:
     ssh_user: centos
     groups:
       - rhel_family
-      - aem_authors
-      - author_dispatchers
+      - aem_publishers
+      - publisher_dispatchers
 
   - name: test-aws-ubuntu18-aem-dispatcher
     image: ami-012fd5eb46f56731f
@@ -37,10 +37,19 @@ platforms:
     spot_price: 0.04
     wait_timeout: 1800
     ssh_user: ubuntu
+    security_opts:
+      - seccomp=unconfined
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    tmpfs:
+      - /tmp
+      - /run
+    capabilities:
+      - SYS_ADMIN
     groups:
       - debian_family
-      - aem_authors
-      - author_dispatchers
+      - aem_publishers
+      - publisher_dispatchers
 
 provisioner:
   name: ansible
