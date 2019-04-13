@@ -9,6 +9,8 @@ web_server_group: apache
 web_server_admin_email: root@localhost
 dispatcher_file: "/opt/dispatcher.done"
 
+dispatcher_back: ['localhost']
+
 # Default apache version
 apache_version: '2.4'
 

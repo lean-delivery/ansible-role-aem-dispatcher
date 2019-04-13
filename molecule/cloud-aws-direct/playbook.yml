@@ -5,10 +5,9 @@
     groups: aem_publishers
 
 - name: Converge
-  hosts: dispatcher_back
+  hosts: publisher_dispatchers
   vars:
     ftp_link: "{{ lookup('env','STORAGE_AWS') }}"
-    aem_publishers: localhost
   roles:
     - role: ansible-role-aem-dispatcher
 
