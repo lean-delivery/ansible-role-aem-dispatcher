@@ -1,6 +1,6 @@
 ---
 - name: Converge
-  hosts: publisher_dispatchers
+  hosts: author_dispatchers
   vars:
     ftp_link: "{{ lookup('env','STORAGE_AWS') }}"
   roles:
