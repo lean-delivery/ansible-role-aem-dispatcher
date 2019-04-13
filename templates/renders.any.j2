@@ -2,6 +2,6 @@
 /rend0{{ loop.index }}
     {
 	    /hostname "{{ render }}"
-	    /port "{{ aem_instance_port }}"
+	    /port "{% if hostvars[render]['aem_instance_port'] is defined %}{{ hostvars[render]['aem_instance_port'] }}{% else %}{{ aem_instance_port }}{% endif %}"
   	}
 {% endfor %}
