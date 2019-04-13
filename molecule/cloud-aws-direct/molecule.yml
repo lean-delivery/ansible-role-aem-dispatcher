@@ -23,8 +23,8 @@ platforms:
     ssh_user: centos
     groups:
       - rhel_family
-      - aem_publishers
-      - publisher_dispatchers
+      - aem_authors
+      - author_dispatchers
 
   - name: test-aws-ubuntu18-aem-dispatcher
     image: ami-012fd5eb46f56731f
@@ -48,8 +48,8 @@ platforms:
       - SYS_ADMIN
     groups:
       - debian_family
-      - aem_publishers
-      - publisher_dispatchers
+      - aem_authors
+      - author_dispatchers
 
 provisioner:
   name: ansible
