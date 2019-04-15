@@ -9,6 +9,8 @@ web_server_group: apache
 web_server_admin_email: root@localhost
 dispatcher_file: "/opt/dispatcher.done"
 
+# Renders to wich dispatcher connect.
+# Please pay attention to set correct list of renders here
 dispatcher_back: ['localhost']
 
 # Default apache version
