@@ -11,7 +11,8 @@ dispatcher_file: "/opt/dispatcher.done"
 
 # Renders to wich dispatcher connect.
 # Please pay attention to set correct list of renders here
-dispatcher_back: ['localhost']
+dispatcher_back:
+  - localhost
 
 # Default apache version
 apache_version: '2.4'

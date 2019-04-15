@@ -42,7 +42,8 @@ Role Variables
     default: `warn`
   - `aem_instance_port` - Port on which Dispatcher connects to AEM instances   
     default: `4502`
-  - `render` - list of renders for this dispatcher
+  - `dispatcher_back` - List of renders for this dispatcher. For example it can take a list from inventory groups. It this case you should set it like this: `dispatcher_back: "{{ groups['aem_publishers'] }}"`
+    default: `localhost`
 
 
 
@@ -61,13 +62,22 @@ Example Playbook
 
 ```yaml
 ---
-- hosts: all
+- name: publisher_dispatcher_install
+  hosts: publisher_dispatchers
+  vars:
+    dispatcher_back: "{{ groups['aem_publishers'] }}"
   roles:
     - role: ansible-role-aem-dispatcher
+      dispatcher_log_level: warn
+
+- name: authors_dispatcher_install
+  hosts: author_dispatchers
   vars:
-    ftp_link: ftp://example.com
-    aemInstancePort: 4502
-    render: localhost
+    dispatcher_back: "{{ groups['aem_authors'] }}"
+  roles:
+    - role: ansible-role-aem-dispatcher
+      dispatcher_log_level: warn
+
 ```
 
 License
