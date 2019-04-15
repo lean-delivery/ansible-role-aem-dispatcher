@@ -17,7 +17,6 @@ Apache httpd server version 2.2 or 2.4.
 Role Variables
 --------------
 
-
   - `web_server_user` - Apache server user   
     default: `apache`
   - `web_server_group` - Apache server user's group   
@@ -44,8 +43,6 @@ Role Variables
     default: `4502`
   - `dispatcher_back` - List of renders for this dispatcher. For example it can take a list from inventory groups. It this case you should set it like this: `dispatcher_back: "{{ groups['aem_publishers'] }}"`
     default: `localhost`
-
-
 
 Dependencies
 ------------

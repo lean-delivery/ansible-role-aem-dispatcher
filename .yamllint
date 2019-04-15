@@ -29,5 +29,5 @@ rules:
     level: warning
   new-lines: disable
 
-ignore: |
-  molecule
+#ignore: |
+#  molecule

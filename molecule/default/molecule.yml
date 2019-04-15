@@ -17,7 +17,6 @@ platforms:
       - rhel_family
       - aem_authors
       - author_dispatchers
-      
   - name: test-docker-ubuntu1804-aem-dispatcher
     image: leandelivery/docker-systemd:ubuntu-18.04
     privileged: True
