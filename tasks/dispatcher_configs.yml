@@ -6,21 +6,8 @@
     file:
       path: '{{ apache_dir }}/conf'
       state: directory
-  #  when: ansible_facts['os_family'] == 'Debian'
+#    when: ansible_facts['os_family'] == 'Debian'
     become: True
-
-  - name: ensure that dispatcher configuration files are ok
-    template:
-      src: '{{ item }}.j2'
-      dest: '{{ dispatcher_any_location }}/{{ item }}'
-      owner: 'root'
-      group: 'root'
-      mode: 0640
-    with_items:
-      - '{{ dispatcher_config_set }}'
-    become: True
-    register: result
-  when: ansible_os_family == "Debian"
 
 - name: ensure that dispatcher configuration files are ok
   template:
@@ -33,7 +20,6 @@
     - '{{ dispatcher_config_set }}'
   become: True
   register: result
-  when: ansible_os_family == "RedHat"
 
 - name: restart apache
   debug: msg="trigger apache-restart"
