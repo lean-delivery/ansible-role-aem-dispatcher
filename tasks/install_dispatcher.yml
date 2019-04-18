@@ -1,87 +1,91 @@
 ---
 # file: tasks/install.yml
 
-- name: ensure that {{ dispatcher_root }} path is ready
-  file:
-    path: '{{ dispatcher_root }}'
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
-    state: directory
-    mode: 0755
-  become: True
+- block:
+  - name: ensure that {{ dispatcher_root }} path is ready
+    file:
+      path: '{{ dispatcher_root }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      state: directory
+      mode: 0755
+    notify:
+    - restart apache
 
-- name: Create link to modules directory
-  file:
-    src: /usr/lib/apache2/modules
-    dest: /etc/apache2/modules
-    state: link
-  when: ansible_facts['os_family'] == 'Debian'
-  become: True
+  - name: Create link to modules directory
+    file:
+      src: /usr/lib/apache2/modules
+      dest: /etc/apache2/modules
+      state: link
+    when: ansible_facts['os_family'] == 'Debian'
 
-- name: ensure that mod_dispatcher.so is present
-  get_url:
-    url: '{{ ftp_server_link }}'
-    dest: '{{ path_to_modules }}/mod_dispatcher.so'
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
-    mode: 0755
-  become: True
+  - name: ensure that mod_dispatcher.so is present
+    get_url:
+      url: '{{ ftp_server_link }}'
+      dest: '{{ path_to_modules }}/mod_dispatcher.so'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      mode: 0755
+    notify:
+    - restart apache
 
-- name: Allow apache to load module
-  sefcontext:
-    target: '{{ path_to_modules }}/mod_dispatcher.so'
-    setype: httpd_sys_script_exec_t
-    state: present
-  when:
-    - ansible_selinux.status == 'enabled'
-    - ansible_selinux.mode != 'disabled'
-  become: True
+  - name: Allow apache to load module
+    sefcontext:
+      target: '{{ path_to_modules }}/mod_dispatcher.so'
+      setype: httpd_sys_script_exec_t
+      state: present
+    when:
+      - ansible_selinux.status == 'enabled'
+      - ansible_selinux.mode != 'disabled'
+    notify:
+    - restart apache
 
-- name: Add dispatcher.load
-  template:
-    src: 'dispatcher.load.j2'
-    dest: '{{ apache_dir }}/mods-available/dispatcher.load'
-    owner: 'root'
-    group: 'root'
-    mode: 0755
-  become: True
-  when: ansible_facts['os_family'] == 'Debian'
+  - name: Add dispatcher.load
+    template:
+      src: 'dispatcher.load.j2'
+      dest: '{{ apache_dir }}/mods-available/dispatcher.load'
+      owner: 'root'
+      group: 'root'
+      mode: 0755
+    when: ansible_facts['os_family'] == 'Debian'
 
-- name: Enable dispatcher module
-  file:
-    src: '{{ apache_dir }}/mods-available/dispatcher.load'
-    dest: '{{ apache_dir }}/mods-enabled/dispatcher.load'
-    state: link
-  when: ansible_facts['os_family'] == 'Debian'
-  become: True
+  - name: Enable dispatcher module
+    file:
+      src: '{{ apache_dir }}/mods-available/dispatcher.load'
+      dest: '{{ apache_dir }}/mods-enabled/dispatcher.load'
+      state: link
+    when: ansible_facts['os_family'] == 'Debian'
+    notify:
+    - restart apache
 
-- name: ensure that main dispatcher configuration is ok
-  template:
-    src: dispatcher.conf.j2
-    dest: '{{ dispatcher_conf_path }}/dispatcher.conf'
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
-    mode: 0755
-  become: True
+  - name: ensure that main dispatcher configuration is ok
+    template:
+      src: dispatcher.conf.j2
+      dest: '{{ dispatcher_conf_path }}/dispatcher.conf'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      mode: 0755
+    notify:
+    - restart apache
 
-- name: Enable dispatcher configuration
-  file:
-    src: '{{ apache_dir }}/conf-available/dispatcher.conf'
-    dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
-    state: link
-    owner: '{{ web_server_user }}'
-    group: '{{ web_server_group }}'
-    mode: 0755
-  when: ansible_facts['os_family'] == 'Debian'
-  become: True
+  - name: Enable dispatcher configuration
+    file:
+      src: '{{ apache_dir }}/conf-available/dispatcher.conf'
+      dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
+      state: link
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      mode: 0755
+    notify:
+    - restart apache
+    when: ansible_facts['os_family'] == 'Debian'
 
-- name: Create link to logs
-  file:
-    src: '/var/log/apache2'
-    dest: '{{ apache_dir }}/logs'
-    state: link
-  notify:
-  - restart apache
+  - name: Create link to logs
+    file:
+      src: '/var/log/apache2'
+      dest: '{{ apache_dir }}/logs'
+      state: link
+    notify:
+    - restart apache
+    when: ansible_facts['os_family'] == 'Debian'
   become: True
-  when: ansible_facts['os_family'] == 'Debian'
-- meta: flush_handlers
