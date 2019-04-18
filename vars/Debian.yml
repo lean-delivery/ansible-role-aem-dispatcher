@@ -1,0 +1,5 @@
+---
+web_server_user: root
+web_server_group: root
+path_to_modules: /usr/lib/apache2/modules
+dispatcher_conf_path: '{{ apache_dir }}/conf-available'

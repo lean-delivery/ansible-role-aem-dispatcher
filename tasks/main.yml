@@ -1,11 +1,14 @@
 ---
 # file: tasks/main.yml
 
+- name: Load variables for OS family
+  include_vars: '{{ ansible_os_family }}.yml'
+
 - name: install apache
   include: installApache.yml
 
-- name: "Configuration of Apache"
-  include_tasks: "configureApache.yml"
+- name: Configuration of Apache
+  include_tasks: configureApache.yml
 
 - name: set facts for dispatcher
   include: set_facts.yml
@@ -19,7 +22,8 @@
   register: dispatcher_done
 - block:
   - name: install Dispatcher
-    include: "install_dispatcher_{{ ansible_os_family }}.yml"
+#    include: "install_dispatcher_{{ ansible_os_family }}.yml"
+    include: install_dispatcher.yml
   - name: save successfull installation in file
     file:
       path: '{{ dispatcher_file }}'

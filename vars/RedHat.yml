@@ -1,0 +1,5 @@
+---
+web_server_user: apache
+web_server_group: apache
+path_to_modules: /etc/httpd/modules
+dispatcher_conf_path: '{{ apache_dir }}/conf.d'
