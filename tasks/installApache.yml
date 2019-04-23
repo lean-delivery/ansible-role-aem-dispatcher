@@ -65,9 +65,8 @@
   register: installed_packages
   until: installed_packages is succeeded
 
-#- name: ensure that httpd is started
-#  service:
-#    name: '{{ apache_service }}'
-#    enabled: True
-#    state: started
-#  become: True
+- name: ensure that httpd is enabled
+  service:
+    name: '{{ apache_service }}'
+    enabled: True
+  become: True

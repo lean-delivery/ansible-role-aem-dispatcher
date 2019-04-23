@@ -16,19 +16,18 @@
 - name: change dispatcher configs
   include: dispatcher_configs.yml
 
-- name: check if service was installed before
-  stat:
-    path: '{{ dispatcher_file }}'
-  register: dispatcher_done
-- block:
-  - name: install Dispatcher
-#    include: "install_dispatcher_{{ ansible_os_family }}.yml"
-    include: install_dispatcher.yml
-  - name: save successfull installation in file
-    file:
-      path: '{{ dispatcher_file }}'
-      state: touch
-    become: True
-  when: not dispatcher_done.stat.exists
+#- name: check if service was installed before
+#  stat:
+#    path: '{{ dispatcher_file }}'
+#  register: dispatcher_done
+#- block:
+- name: install Dispatcher
+  include: install_dispatcher.yml
+#  - name: save successfull installation in file
+#    file:
+#      path: '{{ dispatcher_file }}'
+#      state: touch
+#    become: True
+#  when: not dispatcher_done.stat.exists
 
 - meta: flush_handlers

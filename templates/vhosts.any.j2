@@ -1,1 +1,1 @@
-"{{ inventory_hostname }}"
+"{% if web_server_ssl %}https://{% endif %}{{ inventory_hostname }}"

@@ -11,30 +11,55 @@
   template:
     src: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}.conf.j2"
     dest: "{{ httpd_conf_file }}"
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
   notify:
   - restart apache
 - meta: flush_handlers
 
-- name: ensure that ssl.conf is correct
+- block:
+
+  - name: Install ssl module for apache
+    package:
+      name: mod_ssl
+      state: present
+    register: installed_packages
+    until: installed_packages is succeeded
+    notify:
+    - restart apache
+
+  - name: ensure that ssl.conf is correct
+    become: True
+    template:
+      src: ssl.conf.j2
+      dest: '{{ ssl_conf_file }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+    notify:
+    - restart apache
+
+  - name: Change cert path
+    set_fact:
+      cert_source_file: /etc/pki/tls/certs/localhost.crt
+      key_source_file: /etc/pki/tls/private/localhost.key
+    when: use_native_cert
+
+  - name: Copy certificate for host
+    copy:
+      remote_src: "{{ ( use_native_cert ) | ternary( 'True','False' ) }}"
+      src: '{{ cert_source_file }}'
+      dest: '{{ cert_dest_file }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+    become: True
+
+  - name: Copy key for host
+    copy:
+      remote_src: "{{ ( use_native_cert ) | ternary( 'True','False' ) }}"
+      src: '{{ key_source_file }}'
+      dest: '{{ key_dest_file }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+
   become: True
-  template:
-    src: ssl.conf.j2
-    dest: '{{ ssl_conf_file }}'
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
-  notify:
-  - restart apache
   when: web_server_ssl
-- meta: flush_handlers
-
-#- name: ensure that directory for apache is ready
-#  file:
-#    path: '{{ apache_dir }}'
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
-#    recurse: True
-#    state: directory
-#  become: True
-#  when: ansible_os_family == 'RedHat'

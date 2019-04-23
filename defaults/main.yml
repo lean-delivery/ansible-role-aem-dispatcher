@@ -2,12 +2,12 @@
 # file: defaults/main.yml
 
 # Default account for run apache service
-web_server_user: apache
+#web_server_user: apache
 # Default group for running apache service
-web_server_group: apache
+#web_server_group: apache
 # Default admin email
 web_server_admin_email: root@localhost
-dispatcher_file: "/opt/dispatcher.done"
+dispatcher_file: /opt/dispatcher.done
 
 # Renders to wich dispatcher connect.
 # Please pay attention to set correct list of renders here
@@ -31,8 +31,15 @@ web_server_log_level: warn
 web_server_ssl: False
 # Default HTTPS port
 web_server_https_port: 443
-
+cert_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.crt'
+key_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.key'
+cert_dest_file: '/etc/pki/tls/certs/{{ inventory_hostname }}.crt'
+key_dest_file: '/etc/pki/tls/private/{{ inventory_hostname }}.key'
 aem_instance_port: 4502
+aem_instance_ssl_port: 8443
+
+# Next option should be changed ONLY for testing
+use_native_cert: False
 
 # Dispatcher cache folder
 dispatcher_root: /opt/aemDispatcherCache

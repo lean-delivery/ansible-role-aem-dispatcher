@@ -48,6 +48,20 @@ LoadModule dispatcher_module modules/mod_dispatcher.so
 </IfModule>
 
 <VirtualHost *:{% if web_server_ssl %}{{ web_server_https_port }}{% else %}{{ web_server_http_port }}{% endif %}>
+
+{% if web_server_ssl %}
+
+SSLEngine on
+
+SSLProtocol all -SSLv2 -SSLv3
+
+SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+
+SSLCertificateFile /etc/pki/tls/certs/{{ inventory_hostname }}.crt
+SSLCertificateKeyFile /etc/pki/tls/private/{{ inventory_hostname }}.key
+
+{% endif %}
+
     DocumentRoot "{{ dispatcher_root }}"
     AllowEncodedSlashes On
 
