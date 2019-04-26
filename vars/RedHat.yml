@@ -3,3 +3,6 @@ web_server_user: apache
 web_server_group: apache
 path_to_modules: /etc/httpd/modules
 dispatcher_conf_path: '{{ apache_dir }}/conf.d'
+cert_dest_file: '/etc/pki/tls/certs/{{ inventory_hostname }}.crt'
+key_dest_file: '/etc/pki/tls/private/{{ inventory_hostname }}.key'
+certs_path: /etc/pki/tls

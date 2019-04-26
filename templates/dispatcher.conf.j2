@@ -57,8 +57,8 @@ SSLProtocol all -SSLv2 -SSLv3
 
 SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
 
-SSLCertificateFile /etc/pki/tls/certs/{{ inventory_hostname }}.crt
-SSLCertificateKeyFile /etc/pki/tls/private/{{ inventory_hostname }}.key
+SSLCertificateFile {{ certs_path }}/certs/{{ inventory_hostname }}.crt
+SSLCertificateKeyFile {{ certs_path }}/private/{{ inventory_hostname }}.key
 
 {% endif %}
 

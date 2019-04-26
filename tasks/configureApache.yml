@@ -4,7 +4,7 @@
 - name: prepare all required variables
   set_fact:
     httpd_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','conf/httpd' ) }}.conf"
-    ssl_conf_file: '{{ apache_dir }}/conf.d/ssl.conf'
+    ssl_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'conf-available','conf.d' ) }}/ssl.conf"
 
 - name: ensure that httpd.conf is correct
   become: True
@@ -13,6 +13,7 @@
     dest: "{{ httpd_conf_file }}"
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
+    backup: True
   notify:
   - restart apache
 - meta: flush_handlers
@@ -25,7 +26,8 @@
       state: present
     register: installed_packages
     until: installed_packages is succeeded
-    when: ansible_os_family == 'RedHat'
+    when:
+      - ansible_os_family == 'RedHat'
     notify:
     - restart apache
 
@@ -36,14 +38,32 @@
       dest: '{{ ssl_conf_file }}'
       owner: '{{ web_server_user }}'
       group: '{{ web_server_group }}'
+      backup: True
+    when: ansible_os_family == 'RedHat'
     notify:
     - restart apache
 
-  - name: Change cert path
+  - name: Generate self-signed cert for Debian
+    include: Debian_ssl.yml
+    when:
+      - ansible_os_family == 'Debian'
+      - use_native_cert
+
+  - name: Change cert source path in Redhat
     set_fact:
-      cert_source_file: /etc/pki/tls/certs/localhost.crt
-      key_source_file: /etc/pki/tls/private/localhost.key
-    when: use_native_cert
+      cert_source_file: '{{ certs_path }}/certs/localhost.crt'
+      key_source_file: '{{ certs_path }}/private/localhost.key'
+    when:
+      - ansible_os_family == 'RedHat'
+      - use_native_cert
+
+  - name: Change cert source path in Redhat
+    set_fact:
+      cert_source_file: '{{ certs_path }}/certs/localhost.crt'
+      key_source_file: '{{ certs_path }}/private/localhost.key'
+    when:
+      - ansible_os_family == 'Debian'
+      - use_native_cert
 
   - name: Copy certificate for host
     copy:
@@ -64,6 +84,9 @@
       group: '{{ web_server_group }}'
     notify:
     - restart apache
+#    when:
+#      - ansible_os_family != 'Debian'
+#      - not use_native_cert
 
   become: True
   when: web_server_ssl

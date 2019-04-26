@@ -43,7 +43,7 @@
     persistent: True
   when:
     - ansible_selinux.status == 'enabled'
-    - ansible_os_family == 'RedHat'
+#    - ansible_os_family == 'RedHat'
   become: True
 
 - name: ensure that centos-release-scl installed

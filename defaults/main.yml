@@ -33,8 +33,7 @@ web_server_ssl: False
 web_server_https_port: 443
 cert_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.crt'
 key_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.key'
-cert_dest_file: '/etc/pki/tls/certs/{{ inventory_hostname }}.crt'
-key_dest_file: '/etc/pki/tls/private/{{ inventory_hostname }}.key'
+
 aem_instance_port: 4502
 aem_instance_ssl_port: 8443
 
