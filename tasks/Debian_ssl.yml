@@ -1,0 +1,42 @@
+---
+- block:
+  - name: Install python-openssl
+    package:
+      name: python-openssl
+      state: present
+    register: installed_packages
+    until: installed_packages is succeeded
+
+  - name: Create folders for certs
+    file:
+      path: '{{ certs_path }}/private'
+      state: directory
+      mode: 0777
+
+  - name: Create folders for certs
+    file:
+      path: '{{ certs_path }}/certs'
+      state: directory
+      mode: 0777
+
+  - name: Create private certificate
+    openssl_privatekey:
+      path: '{{ certs_path }}/private/{{ inventory_hostname }}.key'
+      size: 4096
+      owner: '{{ web_server_user }}'
+
+  - name: Create CSR
+    openssl_csr:
+      path: '{{ certs_path }}/{{ inventory_hostname }}.csr'
+      privatekey_path: '{{ certs_path }}/private/{{ inventory_hostname }}.key'
+      common_name: inventory_hostname
+      owner: '{{ web_server_user }}'
+
+  - name: Create certificates for keystore
+    openssl_certificate:
+      csr_path: '{{ certs_path }}/{{ inventory_hostname }}.csr'
+      path: '{{ certs_path }}/certs/{{ inventory_hostname }}.crt'
+      privatekey_path: '{{ certs_path }}/private/{{ inventory_hostname }}.key'
+      provider: selfsigned
+      owner: '{{ web_server_user }}'
+  become: True
