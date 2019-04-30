@@ -43,7 +43,7 @@
     notify:
     - restart apache
 
-  - name: Generate self-signed cert for Debian
+  - name: Prepare ssl for Debian
     include: Debian_ssl.yml
     when:
       - ansible_os_family == 'Debian'
@@ -59,8 +59,8 @@
 
   - name: Change cert source path in Debian
     set_fact:
-      cert_source_file: '{{ certs_path }}/certs/{{ inventory_hostname }}.crt'
-      key_source_file: '{{ certs_path }}/private/{{ inventory_hostname }}.key'
+      cert_source_file: '{{ certs_path }}/certs/ssl-cert-snakeoil.pem'
+      key_source_file: '{{ certs_path }}/private/ssl-cert-snakeoil.key'
     when:
       - ansible_os_family == 'Debian'
       - use_native_cert
@@ -72,8 +72,7 @@
       dest: '{{ cert_dest_file }}'
       owner: '{{ web_server_user }}'
       group: '{{ web_server_group }}'
-    notify:
-    - restart apache
+    notify: restart apache
 
   - name: Copy key for host
     copy:
@@ -82,11 +81,7 @@
       dest: '{{ key_dest_file }}'
       owner: '{{ web_server_user }}'
       group: '{{ web_server_group }}'
-    notify:
-    - restart apache
-#    when:
-#      - ansible_os_family != 'Debian'
-#      - not use_native_cert
+    notify: restart apache
 
   become: True
   when: web_server_ssl

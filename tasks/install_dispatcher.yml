@@ -70,8 +70,8 @@
 
   - name: Enable dispatcher configuration
     file:
-      src: '{{ apache_dir }}/conf-available/dispatcher.conf'
-      dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
+      src: '{{ apache_dir }}/mods-available/dispatcher.conf'
+      dest: '{{ apache_dir }}/mods-enabled/dispatcher.conf'
       state: link
     notify: restart apache
     when: ansible_facts['os_family'] == 'Debian'

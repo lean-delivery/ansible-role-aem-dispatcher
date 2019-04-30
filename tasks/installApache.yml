@@ -12,13 +12,12 @@
   become: True
   package:
     name:
-      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'python-selinux_2.4-3build2_amd64.deb','policycoreutils-python' ) }}"
+      - policycoreutils-python
       - selinux-policy
     state: present
   register: installed_packages
   until: installed_packages is succeeded
-  when:
-    - ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat'
 
 - name: Selinux permissive
   become: True
@@ -46,17 +45,6 @@
   when:
     - ansible_selinux.status == 'enabled'
   become: True
-
-#- name: ensure that centos-release-scl installed
-#  become: True
-#  package:
-#    name: centos-release-scl
-#    state: present
-#  register: installed_packages
-#  until: installed_packages is succeeded
-#  when:
-#    - ansible_distribution_version == '6.8'
-#    - ansible_os_family == 'RedHat'
 
 - name: ensure that httpd web-server is installed
   become: True

@@ -44,7 +44,7 @@ use_native_cert: False
 dispatcher_root: /opt/aemDispatcherCache
 
 # Dispatcher module version
-dispatcher_module_version: '4.2.2'
+dispatcher_module_version: '4.3.2'
 
 # Dispatcher log level
 # error(0): Errors
