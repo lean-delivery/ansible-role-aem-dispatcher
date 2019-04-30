@@ -5,6 +5,8 @@
 	    /hostname "{{ render }}"
 	    /port "{% if hostvars[render]['aem_instance_ssl_port'] is defined %}{{ hostvars[render]['aem_instance_ssl_port'] }}{% else %}{{ aem_instance_ssl_port }}{% endif %}"
 	    /secure "1"
+	}
+	
   	{% else %}
 	{
 	    /hostname "{{ render }}"

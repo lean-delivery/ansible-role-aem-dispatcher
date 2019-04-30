@@ -57,10 +57,10 @@
       - ansible_os_family == 'RedHat'
       - use_native_cert
 
-  - name: Change cert source path in Redhat
+  - name: Change cert source path in Debian
     set_fact:
-      cert_source_file: '{{ certs_path }}/certs/localhost.crt'
-      key_source_file: '{{ certs_path }}/private/localhost.key'
+      cert_source_file: '{{ certs_path }}/certs/{{ inventory_hostname }}.crt'
+      key_source_file: '{{ certs_path }}/private/{{ inventory_hostname }}.key'
     when:
       - ansible_os_family == 'Debian'
       - use_native_cert

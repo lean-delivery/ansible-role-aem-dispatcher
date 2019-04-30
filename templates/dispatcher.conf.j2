@@ -1,4 +1,4 @@
-LoadModule dispatcher_module modules/mod_dispatcher.so
+{% if ansible_os_family == 'RedHat' %}LoadModule dispatcher_module modules/mod_dispatcher.so{% endif %}
 
 <IfModule disp_apache2.c>
 
@@ -57,8 +57,8 @@ SSLProtocol all -SSLv2 -SSLv3
 
 SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
 
-SSLCertificateFile {{ certs_path }}/certs/{{ inventory_hostname }}.crt
-SSLCertificateKeyFile {{ certs_path }}/private/{{ inventory_hostname }}.key
+SSLCertificateFile {{ cert_dest_file }}
+SSLCertificateKeyFile {{ key_dest_file }}
 
 {% endif %}
 

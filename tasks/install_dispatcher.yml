@@ -73,11 +73,7 @@
       src: '{{ apache_dir }}/conf-available/dispatcher.conf'
       dest: '{{ apache_dir }}/conf-enabled/dispatcher.conf'
       state: link
-      owner: '{{ web_server_user }}'
-      group: '{{ web_server_group }}'
-      mode: 0755
-    notify:
-    - restart apache
+    notify: restart apache
     when: ansible_facts['os_family'] == 'Debian'
 
   - name: Create link to logs
