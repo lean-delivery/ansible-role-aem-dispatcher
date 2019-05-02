@@ -3,5 +3,7 @@
   hosts: author_dispatchers
   vars:
     ftp_link: "{{ lookup('env','STORAGE_AWS') }}"
+    web_server_ssl: True
+    use_native_cert: True
   roles:
     - role: ansible-role-aem-dispatcher

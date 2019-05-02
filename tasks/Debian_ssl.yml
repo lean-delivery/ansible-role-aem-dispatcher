@@ -1,0 +1,34 @@
+---
+- block:
+  - name: Create link for libssl.so
+    file:
+      src: /lib/x86_64-linux-gnu/libssl.so.1.0.0
+      dest: /lib/x86_64-linux-gnu/libssl.so.10
+      state: link
+    notify: restart apache
+
+  - name: Create links
+    file:
+      src: '{{ link_item.src }}'
+      dest: '{{ link_item.dest }}'
+      state: link
+    loop:
+      - src: /lib/x86_64-linux-gnu/libssl.so.1.0.0
+        dest: /lib/x86_64-linux-gnu/libssl.so.10
+      - src: /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
+        dest: /lib/x86_64-linux-gnu/libcrypto.so.10
+      - src: '{{ apache_dir }}/mods-available/ssl.load'
+        dest: '{{ apache_dir }}/mods-enabled/ssl.load'
+      - src: '{{ apache_dir }}/mods-available/ssl.conf'
+        dest: '{{ apache_dir }}/mods-enabled/ssl.conf'
+      - src: '{{ apache_dir }}/mods-available/setenvif.load'
+        dest: '{{ apache_dir }}/mods-enabled/setenvif.load'
+      - src: '{{ apache_dir }}/mods-available/mime.load'
+        dest: '{{ apache_dir }}/mods-enabled/mime.load'
+      - src: '{{ apache_dir }}/mods-available/socache_shmcb.load'
+        dest: '{{ apache_dir }}/mods-enabled/socache_shmcb.load'
+    loop_control:
+      loop_var: link_item
+    notify: restart apache
+
+  become: True

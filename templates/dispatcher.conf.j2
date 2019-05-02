@@ -1,4 +1,4 @@
-LoadModule dispatcher_module modules/mod_dispatcher.so
+{% if ansible_os_family == 'RedHat' %}LoadModule dispatcher_module modules/mod_dispatcher.so{% endif %}
 
 <IfModule disp_apache2.c>
 
@@ -48,6 +48,20 @@ LoadModule dispatcher_module modules/mod_dispatcher.so
 </IfModule>
 
 <VirtualHost *:{% if web_server_ssl %}{{ web_server_https_port }}{% else %}{{ web_server_http_port }}{% endif %}>
+
+{% if web_server_ssl %}
+
+SSLEngine on
+
+SSLProtocol all -SSLv2 -SSLv3
+
+SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+
+SSLCertificateFile {{ cert_dest_file }}
+SSLCertificateKeyFile {{ key_dest_file }}
+
+{% endif %}
+
     DocumentRoot "{{ dispatcher_root }}"
     AllowEncodedSlashes On
 

@@ -2,4 +2,7 @@
 web_server_user: root
 web_server_group: root
 path_to_modules: /usr/lib/apache2/modules
-dispatcher_conf_path: '{{ apache_dir }}/conf-available'
+dispatcher_conf_path: '{{ apache_dir }}/mods-available'
+cert_dest_file: '/etc/ssl/certs/{{ inventory_hostname }}.crt'
+key_dest_file: '/etc/ssl/private/{{ inventory_hostname }}.key'
+certs_path: /etc/ssl
