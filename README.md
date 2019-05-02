@@ -7,6 +7,7 @@ aem-dispatcher role
 ![Ansible](https://img.shields.io/ansible/role/d/39616.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F39616%2F&query=$.min_ansible_version)
 
+
 This role installs Apache httpd server and dispatcher module on RHEL and Debian based systems.
 
 Requirements
