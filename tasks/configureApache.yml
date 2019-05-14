@@ -16,7 +16,6 @@
     backup: True
   notify:
   - restart apache
-- meta: flush_handlers
 
 - block:
 
