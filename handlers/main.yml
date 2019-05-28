@@ -5,6 +5,5 @@
   service:
       name: '{{ apache_service }}'
       state: restarted
-      enabled: True
-  become: True
-#  ignore_errors: True
+      enabled: true
+  become: true

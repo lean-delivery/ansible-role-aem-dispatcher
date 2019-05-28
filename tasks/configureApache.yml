@@ -1,19 +1,14 @@
 ---
 # file: tasks/configure.yml
 
-- name: prepare all required variables
-  set_fact:
-    httpd_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','conf/httpd' ) }}.conf"
-    ssl_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'conf-available','conf.d' ) }}/ssl.conf"
-
 - name: ensure that httpd.conf is correct
-  become: True
+  become: true
   template:
-    src: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}.conf.j2"
+    src: '{{ ansible_os_family }}_httpd.conf.j2'
     dest: "{{ httpd_conf_file }}"
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
-    backup: True
+    backup: true
   notify:
   - restart apache
 
@@ -31,13 +26,13 @@
     - restart apache
 
   - name: ensure that ssl.conf is correct
-    become: True
+    become: true
     template:
       src: ssl.conf.j2
-      dest: '{{ ssl_conf_file }}'
+      dest: '{{ apache_dir }}/conf.d/ssl.conf'
       owner: '{{ web_server_user }}'
       group: '{{ web_server_group }}'
-      backup: True
+      backup: true
     when: ansible_os_family == 'RedHat'
     notify:
     - restart apache
@@ -48,25 +43,16 @@
       - ansible_os_family == 'Debian'
       - use_native_cert
 
-  - name: Change cert source path in Redhat
+  - name: Change cert source path
     set_fact:
-      cert_source_file: '{{ certs_path }}/certs/localhost.crt'
-      key_source_file: '{{ certs_path }}/private/localhost.key'
+      cert_source_file: "{{ certs_path }}/certs/{{ ( ansible_os_family == 'Debian' ) | ternary( 'ssl-cert-snakeoil.pem','localhost.crt' ) }}"
+      key_source_file: "{{ certs_path }}/private/{{ ( ansible_os_family == 'Debian' ) | ternary( 'ssl-cert-snakeoil.key', 'localhost.key' ) }}"
     when:
-      - ansible_os_family == 'RedHat'
-      - use_native_cert
-
-  - name: Change cert source path in Debian
-    set_fact:
-      cert_source_file: '{{ certs_path }}/certs/ssl-cert-snakeoil.pem'
-      key_source_file: '{{ certs_path }}/private/ssl-cert-snakeoil.key'
-    when:
-      - ansible_os_family == 'Debian'
       - use_native_cert
 
   - name: Copy certificate for host
     copy:
-      remote_src: "{{ ( use_native_cert ) | ternary( 'True','False' ) }}"
+      remote_src: "{{ ( use_native_cert ) | ternary( 'true','false' ) }}"
       src: '{{ cert_source_file }}'
       dest: '{{ cert_dest_file }}'
       owner: '{{ web_server_user }}'
@@ -75,12 +61,12 @@
 
   - name: Copy key for host
     copy:
-      remote_src: "{{ ( use_native_cert ) | ternary( 'True','False' ) }}"
+      remote_src: "{{ ( use_native_cert ) | ternary( 'true','false' ) }}"
       src: '{{ key_source_file }}'
       dest: '{{ key_dest_file }}'
       owner: '{{ web_server_user }}'
       group: '{{ web_server_group }}'
     notify: restart apache
 
-  become: True
+  become: true
   when: web_server_ssl

@@ -12,14 +12,14 @@ lint:
 platforms:
   - name: test-docker-centos7-aem-dispatcher
     image: leandelivery/docker-systemd:centos7
-    privileged: True
+    privileged: true
     groups:
       - rhel_family
       - aem_authors
       - author_dispatchers
   - name: test-docker-ubuntu1604-aem-dispatcher
     image: leandelivery/docker-systemd:ubuntu-16.04
-    privileged: True
+    privileged: true
     security_opts:
       - seccomp=unconfined
     volumes:
@@ -37,7 +37,7 @@ platforms:
 
 provisioner:
   name: ansible
-  log: True
+  log: true
   lint:
     name: ansible-lint
 scenario:

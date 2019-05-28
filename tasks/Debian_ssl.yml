@@ -31,4 +31,4 @@
       loop_var: link_item
     notify: restart apache
 
-  become: True
+  become: true

@@ -84,4 +84,4 @@
     notify:
     - restart apache
     when: ansible_facts['os_family'] == 'Debian'
-  become: True
+  become: true

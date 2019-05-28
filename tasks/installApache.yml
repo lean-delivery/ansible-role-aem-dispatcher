@@ -9,7 +9,7 @@
       - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
 
 - name: ensure that utils for SELinux managment are installed
-  become: True
+  become: true
   package:
     name:
       - policycoreutils-python
@@ -20,7 +20,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: Selinux permissive
-  become: True
+  become: true
   selinux:
     policy: targeted
     state: permissive
@@ -35,19 +35,19 @@
   when:
     - ansible_selinux.status == 'enabled'
     - ansible_selinux.mode != 'disabled'
-  become: True
+  become: true
 
 - name: Allow apache to do connections
   seboolean:
     name: httpd_can_network_connect
-    state: True
-    persistent: True
+    state: true
+    persistent: true
   when:
     - ansible_selinux.status == 'enabled'
-  become: True
+  become: true
 
 - name: ensure that httpd web-server is installed
-  become: True
+  become: true
   package:
     name: '{{ apache_packages }}'
     state: present
@@ -57,5 +57,5 @@
 - name: ensure that httpd is enabled
   service:
     name: '{{ apache_service }}'
-    enabled: True
-  become: True
+    enabled: true
+  become: true

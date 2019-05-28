@@ -28,7 +28,7 @@ web_server_http_port: 80
 web_server_log_level: warn
 
 # Enable HTTPS by default or not
-web_server_ssl: False
+web_server_ssl: false
 # Default HTTPS port
 web_server_https_port: 443
 cert_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.crt'
@@ -38,7 +38,7 @@ aem_instance_port: 4502
 aem_instance_ssl_port: 8443
 
 # Next option should be changed ONLY for testing
-use_native_cert: False
+use_native_cert: false
 
 # Dispatcher cache folder
 dispatcher_root: /opt/aemDispatcherCache
