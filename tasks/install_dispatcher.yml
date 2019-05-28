@@ -12,13 +12,6 @@
     notify:
     - restart apache
 
-  - name: Create link to modules directory
-    file:
-      src: /usr/lib/apache2/modules
-      dest: /etc/apache2/modules
-      state: link
-    when: ansible_facts['os_family'] == 'Debian'
-
   - name: ensure that mod_dispatcher.so is present
     get_url:
       url: '{{ ftp_server_link }}'
@@ -49,15 +42,6 @@
       mode: 0644
     when: ansible_facts['os_family'] == 'Debian'
 
-  - name: Enable dispatcher module
-    file:
-      src: '{{ apache_dir }}/mods-available/dispatcher.load'
-      dest: '{{ apache_dir }}/mods-enabled/dispatcher.load'
-      state: link
-    when: ansible_facts['os_family'] == 'Debian'
-    notify:
-    - restart apache
-
   - name: ensure that main dispatcher configuration is ok
     template:
       src: dispatcher.conf.j2
@@ -68,20 +52,7 @@
     notify:
     - restart apache
 
-  - name: Enable dispatcher configuration
-    file:
-      src: '{{ apache_dir }}/mods-available/dispatcher.conf'
-      dest: '{{ apache_dir }}/mods-enabled/dispatcher.conf'
-      state: link
-    notify: restart apache
-    when: ansible_facts['os_family'] == 'Debian'
-
-  - name: Create link to logs
-    file:
-      src: '/var/log/apache2'
-      dest: '{{ apache_dir }}/logs'
-      state: link
-    notify:
-    - restart apache
+  - name: Create link in Ubuntu
+    include: Debian_links.yml
     when: ansible_facts['os_family'] == 'Debian'
   become: true

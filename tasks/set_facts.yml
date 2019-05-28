@@ -1,30 +1,11 @@
 ---
 # file: tasks/set_facts.yml
 
-- name: reinitialization of defaults as variables
-  set_fact:
-    dispatcher_module_version: '{{ dispatcher_module_version }}'
-    dispatcher_root: '{{ dispatcher_root }}'
-
-- name: variables preparation
-  set_fact:
-    ftp_common_link: "{{ ftp_link }}/aem/dispatcher/dispatcher-\
-    {{ dispatcher_module_version }}-apache-{{ apache_version }}"
-    semanage_sh_file: '{{ dispatcher_root }}/semanage.sh'
-    dispatcher_any_location: '{{ apache_dir }}/conf'
-    dispatcher_config_set:
-      - dispatcher.any
-      - filters.any
-      - invalidate.any
-      - renders.any
-      - vhosts.any
-      - clientheaders.any
-
-
 - name: prepare FTP Link variable (with SSL)
   set_fact:
     ftp_server_link: '{{ ftp_common_link }}-ssl.so'
   when: web_server_ssl
+
 - name: prepare FTP Link variable (without SSL)
   set_fact:
     ftp_server_link: '{{ ftp_common_link }}.so'

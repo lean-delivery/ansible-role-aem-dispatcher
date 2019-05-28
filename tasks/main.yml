@@ -1,6 +1,9 @@
 ---
 # file: tasks/main.yml
 
+- name: Load common variables
+  include_vars: main.yml
+
 - name: Load variables for OS family
   include_vars: '{{ ansible_os_family }}.yml'
 
