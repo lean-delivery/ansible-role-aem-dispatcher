@@ -1,13 +1,6 @@
 ---
 # file: tasks/install.yml
 
-#- name: reinitialization of defaults as variables
-#  set_fact:
-#    apache_service: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-#    apache_dir: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-#    apache_packages:
-#      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-
 - name: ensure that httpd web-server is installed
   become: true
   package:
