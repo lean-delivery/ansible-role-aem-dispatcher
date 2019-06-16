@@ -1,50 +1,12 @@
 ---
 # file: tasks/install.yml
 
-- name: reinitialization of defaults as variables
-  set_fact:
-    apache_service: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-    apache_dir: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-    apache_packages:
-      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-
-- name: ensure that utils for SELinux managment are installed
-  become: true
-  package:
-    name:
-      - policycoreutils-python
-      - selinux-policy
-    state: present
-  register: installed_packages
-  until: installed_packages is succeeded
-  when: ansible_os_family == 'RedHat'
-
-- name: Selinux permissive
-  become: true
-  selinux:
-    policy: targeted
-    state: permissive
-  when:
-    - ansible_selinux.status == 'enabled'
-
-- name: Allow apache to load module
-  sefcontext:
-    target: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}/modules/mod_dispatcher.so"
-    setype: httpd_sys_script_exec_t
-    state: present
-  when:
-    - ansible_selinux.status == 'enabled'
-    - ansible_selinux.mode != 'disabled'
-  become: true
-
-- name: Allow apache to do connections
-  seboolean:
-    name: httpd_can_network_connect
-    state: true
-    persistent: true
-  when:
-    - ansible_selinux.status == 'enabled'
-  become: true
+#- name: reinitialization of defaults as variables
+#  set_fact:
+#    apache_service: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
+#    apache_dir: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
+#    apache_packages:
+#      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
 
 - name: ensure that httpd web-server is installed
   become: true

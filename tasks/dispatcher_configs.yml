@@ -18,10 +18,5 @@
     - '{{ dispatcher_config_set }}'
   become: true
   register: result
-
-- name: restart apache
-  debug: msg="trigger apache-restart"
   notify:
     - restart apache
-  changed_when: true
-  when: result is changed

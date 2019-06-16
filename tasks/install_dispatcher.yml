@@ -33,15 +33,6 @@
     notify:
     - restart apache
 
-  - name: Add dispatcher.load
-    template:
-      src: 'dispatcher.load.j2'
-      dest: '{{ apache_dir }}/mods-available/dispatcher.load'
-      owner: 'root'
-      group: 'root'
-      mode: 0644
-    when: ansible_facts['os_family'] == 'Debian'
-
   - name: ensure that main dispatcher configuration is ok
     template:
       src: dispatcher.conf.j2
@@ -53,6 +44,5 @@
     - restart apache
 
   - name: Create link in Ubuntu
-    include: Debian_links.yml
-    when: ansible_facts['os_family'] == 'Debian'
+    include: '{{ ansible_os_family }}.yml'
   become: true

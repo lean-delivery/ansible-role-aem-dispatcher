@@ -14,45 +14,21 @@
 
 - block:
 
-  - name: Install ssl module for apache
-    package:
-      name: mod_ssl
-      state: present
-    register: installed_packages
-    until: installed_packages is succeeded
+  - name: Prepare ssl for apache
+    include: '{{ ansible_os_family }}_ssl.yml'
     when:
-      - ansible_os_family == 'RedHat'
-    notify:
-    - restart apache
-
-  - name: ensure that ssl.conf is correct
-    become: true
-    template:
-      src: ssl.conf.j2
-      dest: '{{ apache_dir }}/conf.d/ssl.conf'
-      owner: '{{ web_server_user }}'
-      group: '{{ web_server_group }}'
-      backup: true
-    when: ansible_os_family == 'RedHat'
-    notify:
-    - restart apache
-
-  - name: Prepare ssl for Debian
-    include: Debian_ssl.yml
-    when:
-      - ansible_os_family == 'Debian'
       - use_native_cert
 
   - name: Change cert source path
     set_fact:
-      cert_source_file: "{{ certs_path }}/certs/{{ ( ansible_os_family == 'Debian' ) | ternary( 'ssl-cert-snakeoil.pem','localhost.crt' ) }}"
-      key_source_file: "{{ certs_path }}/private/{{ ( ansible_os_family == 'Debian' ) | ternary( 'ssl-cert-snakeoil.key', 'localhost.key' ) }}"
+      cert_source_file: '{{ native_cert_source_file }}'
+      key_source_file: '{{ native_key_source_file }}'
     when:
       - use_native_cert
 
   - name: Copy certificate for host
     copy:
-      remote_src: "{{ ( use_native_cert ) | ternary( 'true','false' ) }}"
+      remote_src: '{{ use_native_cert }}'
       src: '{{ cert_source_file }}'
       dest: '{{ cert_dest_file }}'
       owner: '{{ web_server_user }}'
@@ -61,7 +37,7 @@
 
   - name: Copy key for host
     copy:
-      remote_src: "{{ ( use_native_cert ) | ternary( 'true','false' ) }}"
+      remote_src: '{{ use_native_cert }}'
       src: '{{ key_source_file }}'
       dest: '{{ key_dest_file }}'
       owner: '{{ web_server_user }}'
