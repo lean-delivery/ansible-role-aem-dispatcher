@@ -4,7 +4,7 @@
 - name: prepare FTP Link variable (with SSL)
   set_fact:
     ftp_server_link: '{{ ftp_common_link }}-ssl.so'
-  when: web_server_ssl
+  when: web_server_ssl | bool
 
 - name: prepare FTP Link variable (without SSL)
   set_fact:

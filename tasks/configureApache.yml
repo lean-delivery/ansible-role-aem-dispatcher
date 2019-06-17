@@ -15,20 +15,20 @@
 - block:
 
   - name: Prepare ssl for apache
-    include: '{{ ansible_os_family }}_ssl.yml'
+    include_tasks: '{{ ansible_os_family }}_ssl.yml'
     when:
-      - use_native_cert
+      - use_native_cert | bool
 
   - name: Change cert source path
     set_fact:
       cert_source_file: '{{ native_cert_source_file }}'
       key_source_file: '{{ native_key_source_file }}'
     when:
-      - use_native_cert
+      - use_native_cert | bool
 
   - name: Copy certificate for host
     copy:
-      remote_src: '{{ use_native_cert }}'
+      remote_src: '{{ use_native_cert | bool }}'
       src: '{{ cert_source_file }}'
       dest: '{{ cert_dest_file }}'
       owner: '{{ web_server_user }}'
@@ -37,7 +37,7 @@
 
   - name: Copy key for host
     copy:
-      remote_src: '{{ use_native_cert }}'
+      remote_src: '{{ use_native_cert | bool }}'
       src: '{{ key_source_file }}'
       dest: '{{ key_dest_file }}'
       owner: '{{ web_server_user }}'
@@ -45,4 +45,4 @@
     notify: restart apache
 
   become: true
-  when: web_server_ssl
+  when: web_server_ssl | bool
