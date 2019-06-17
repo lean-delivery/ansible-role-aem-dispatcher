@@ -1,40 +1,41 @@
 ---
 # file: tasks/configure.yml
 
-- name: prepare all required variables
-  set_fact:
-    httpd_conf_file: "{{ apache_dir }}/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','conf/httpd' ) }}.conf"
-    ssl_conf_file: '{{ apache_dir }}/conf.d/ssl.conf'
-
 - name: ensure that httpd.conf is correct
-  become: True
+  become: true
   template:
-    src: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}.conf.j2"
+    src: '{{ ansible_os_family }}_httpd.conf.j2'
     dest: "{{ httpd_conf_file }}"
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
+    backup: true
   notify:
   - restart apache
-- meta: flush_handlers
 
-- name: ensure that ssl.conf is correct
-  become: True
-  template:
-    src: ssl.conf.j2
-    dest: '{{ ssl_conf_file }}'
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
-  notify:
-  - restart apache
-  when: web_server_ssl
-- meta: flush_handlers
+- block:
 
-#- name: ensure that directory for apache is ready
-#  file:
-#    path: '{{ apache_dir }}'
-#    owner: '{{ web_server_user }}'
-#    group: '{{ web_server_group }}'
-#    recurse: True
-#    state: directory
-#  become: True
-#  when: ansible_os_family == 'RedHat'
+  - name: Prepare ssl for apache
+    include_tasks: '{{ ansible_os_family }}_ssl.yml'
+    when:
+      - use_native_cert | bool
+
+  - name: Copy certificate for host
+    copy:
+      remote_src: '{{ use_native_cert | bool }}'
+      src: '{{ cert_source_file }}'
+      dest: '{{ cert_dest_file }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+    notify: restart apache
+
+  - name: Copy key for host
+    copy:
+      remote_src: '{{ use_native_cert | bool }}'
+      src: '{{ key_source_file }}'
+      dest: '{{ key_dest_file }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+    notify: restart apache
+
+  become: true
+  when: web_server_ssl | bool

@@ -1,26 +1,11 @@
 ---
 # file: tasks/dispatcher_configs.yml
 
-- block:
-  - name: Ensure that 'conf' directory exists
-    file:
-      path: '{{ apache_dir }}/conf'
-      state: directory
-  #  when: ansible_facts['os_family'] == 'Debian'
-    become: True
-
-  - name: ensure that dispatcher configuration files are ok
-    template:
-      src: '{{ item }}.j2'
-      dest: '{{ dispatcher_any_location }}/{{ item }}'
-      owner: 'root'
-      group: 'root'
-      mode: 0640
-    with_items:
-      - '{{ dispatcher_config_set }}'
-    become: True
-    register: result
-  when: ansible_os_family == "Debian"
+- name: Ensure that 'conf' directory exists
+  file:
+    path: '{{ apache_dir }}/conf'
+    state: directory
+  become: true
 
 - name: ensure that dispatcher configuration files are ok
   template:
@@ -29,15 +14,8 @@
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
     mode: 0755
-  with_items:
-    - '{{ dispatcher_config_set }}'
-  become: True
+  loop: '{{ dispatcher_config_set }}'
+  become: true
   register: result
-  when: ansible_os_family == "RedHat"
-
-- name: restart apache
-  debug: msg="trigger apache-restart"
   notify:
     - restart apache
-  changed_when: True
-  when: result is changed

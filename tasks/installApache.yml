@@ -1,70 +1,16 @@
 ---
 # file: tasks/install.yml
 
-- name: reinitialization of defaults as variables
-  set_fact:
-    apache_service: "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-    apache_dir: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-    apache_packages:
-      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}"
-
-- name: ensure that utils for SELinux managment are installed
-  become: True
-  package:
-    name:
-      - "{{ ( ansible_os_family == 'Debian' ) | ternary( 'policycoreutils-python-utils','policycoreutils-python' ) }}"
-      - selinux-policy
-    state: present
-  register: installed_packages
-  until: installed_packages is succeeded
-
-- name: Selinux permissive
-  become: True
-  selinux:
-    policy: targeted
-    state: permissive
-  when:
-    - ansible_selinux.status == 'enabled'
-
-- name: Allow apache to load module
-  sefcontext:
-    target: "/etc/{{ ( ansible_os_family == 'Debian' ) | ternary( 'apache2','httpd' ) }}/modules/mod_dispatcher.so"
-    setype: httpd_sys_script_exec_t
-    state: present
-  when:
-    - ansible_selinux.status == 'enabled'
-#    - ansible_selinux.mode != 'disabled'
-  become: True
-
-- name: Allow apache to do connections
-  seboolean:
-    name: httpd_can_network_connect
-    state: True
-    persistent: True
-  when:
-    - ansible_selinux.status == 'enabled'
-  become: True
-
-- name: ensure that centos-release-scl installed
-  become: True
-  package:
-    name: centos-release-scl
-    state: present
-  register: installed_packages
-  until: installed_packages is succeeded
-  when: ansible_distribution_version == '6.8'
-
 - name: ensure that httpd web-server is installed
-  become: True
+  become: true
   package:
     name: '{{ apache_packages }}'
     state: present
   register: installed_packages
   until: installed_packages is succeeded
 
-#- name: ensure that httpd is started
-#  service:
-#    name: '{{ apache_service }}'
-#    enabled: True
-#    state: started
-#  become: True
+- name: ensure that httpd is enabled
+  service:
+    name: '{{ apache_service }}'
+    enabled: true
+  become: true

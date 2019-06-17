@@ -1,0 +1,48 @@
+---
+# file: tasks/install_dispatcher.yml
+
+- block:
+  - name: ensure that {{ dispatcher_root }} path is ready
+    file:
+      path: '{{ dispatcher_root }}'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      state: directory
+      mode: 0755
+    notify:
+    - restart apache
+
+  - name: ensure that mod_dispatcher.so is present
+    get_url:
+      url: '{{ ftp_server_link }}'
+      dest: '{{ path_to_modules }}/mod_dispatcher.so'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      mode: 0644
+    notify:
+    - restart apache
+
+  - name: Allow apache to load module
+    sefcontext:
+      target: '{{ path_to_modules }}/mod_dispatcher.so'
+      setype: httpd_sys_script_exec_t
+      state: present
+    when:
+      - ansible_selinux.status == 'enabled'
+      - ansible_selinux.mode != 'disabled'
+    notify:
+    - restart apache
+
+  - name: ensure that main dispatcher configuration is ok
+    template:
+      src: dispatcher.conf.j2
+      dest: '{{ dispatcher_conf_path }}/dispatcher.conf'
+      owner: '{{ web_server_user }}'
+      group: '{{ web_server_group }}'
+      mode: 0644
+    notify:
+    - restart apache
+
+  - name: Create link in Ubuntu
+    include_tasks: '{{ ansible_os_family }}.yml'
+  become: true

@@ -2,12 +2,12 @@
 # file: defaults/main.yml
 
 # Default account for run apache service
-web_server_user: apache
+#web_server_user: apache
 # Default group for running apache service
-web_server_group: apache
+#web_server_group: apache
 # Default admin email
 web_server_admin_email: root@localhost
-dispatcher_file: "/opt/dispatcher.done"
+dispatcher_file: /opt/dispatcher.done
 
 # Renders to wich dispatcher connect.
 # Please pay attention to set correct list of renders here
@@ -28,17 +28,28 @@ web_server_http_port: 80
 web_server_log_level: warn
 
 # Enable HTTPS by default or not
-web_server_ssl: False
+web_server_ssl: false
 # Default HTTPS port
 web_server_https_port: 443
 
+ftp_server_link: "{{ ftp_common_link }}{{ web_server_ssl | bool | ternary('-ssl', '') }}.so"
+
+# Next option should be changed ONLY for testing
+use_native_cert: false
+
+# Please pay attention to certificate file path in the next point.
+# You don't need to change this path if you want to use native Apache's certificate
+cert_source_file: "{{ use_native_cert | ternary(native_cert_source_file, '/opt/aem_ssl/ssl/{{ inventory_hostname }}.crt') }}"
+key_source_file: "{{ use_native_cert | ternary(native_key_source_file, '/opt/aem_ssl/ssl/{{ inventory_hostname }}.key') }}"
+
 aem_instance_port: 4502
+aem_instance_ssl_port: 8443
 
 # Dispatcher cache folder
 dispatcher_root: /opt/aemDispatcherCache
 
 # Dispatcher module version
-dispatcher_module_version: '4.2.2'
+dispatcher_module_version: '4.3.2'
 
 # Dispatcher log level
 # error(0): Errors
