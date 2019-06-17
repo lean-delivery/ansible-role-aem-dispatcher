@@ -32,6 +32,8 @@ web_server_ssl: false
 # Default HTTPS port
 web_server_https_port: 443
 
+ftp_server_link: "{{ ftp_common_link }}{{  web_server_ssl | ternary(web_server_ssl, '-ssl') }}.so"
+
 # Next option should be changed ONLY for testing
 use_native_cert: false
 
