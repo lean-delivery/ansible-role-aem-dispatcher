@@ -13,9 +13,6 @@
 - name: Configuration of Apache
   include_tasks: configureApache.yml
 
-#- name: set facts for dispatcher
-#  include_tasks: set_facts.yml
-
 - name: change dispatcher configs
   include_tasks: dispatcher_configs.yml
 
