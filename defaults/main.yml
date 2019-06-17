@@ -31,14 +31,17 @@ web_server_log_level: warn
 web_server_ssl: false
 # Default HTTPS port
 web_server_https_port: 443
-cert_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.crt'
-key_source_file: '/opt/aem_ssl/ssl/{{ inventory_hostname }}.key'
-
-aem_instance_port: 4502
-aem_instance_ssl_port: 8443
 
 # Next option should be changed ONLY for testing
 use_native_cert: false
+
+# Please pay attention to certificate file path in the next point.
+# You don't need to change this path if you want to use native Apache's certificate
+cert_source_file: "{{ use_native_cert | ternary(native_cert_source_file, '/opt/aem_ssl/ssl/{{ inventory_hostname }}.crt') }}"
+key_source_file: "{{ use_native_cert | ternary(native_key_source_file, '/opt/aem_ssl/ssl/{{ inventory_hostname }}.key') }}"
+
+aem_instance_port: 4502
+aem_instance_ssl_port: 8443
 
 # Dispatcher cache folder
 dispatcher_root: /opt/aemDispatcherCache
