@@ -44,5 +44,5 @@
     - restart apache
 
   - name: Create link in Ubuntu
-    include: '{{ ansible_os_family }}.yml'
+    include_tasks: '{{ ansible_os_family }}.yml'
   become: true

@@ -8,18 +8,18 @@
   include_vars: '{{ ansible_os_family }}.yml'
 
 - name: install apache
-  include: installApache.yml
+  include_tasks: installApache.yml
 
 - name: Configuration of Apache
   include_tasks: configureApache.yml
 
 - name: set facts for dispatcher
-  include: set_facts.yml
+  include_tasks: set_facts.yml
 
 - name: change dispatcher configs
-  include: dispatcher_configs.yml
+  include_tasks: dispatcher_configs.yml
 
 - name: install Dispatcher
-  include: install_dispatcher.yml
+  include_tasks: install_dispatcher.yml
 
 - meta: flush_handlers

@@ -14,8 +14,7 @@
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
     mode: 0755
-  with_items:
-    - '{{ dispatcher_config_set }}'
+  loop: '{{ dispatcher_config_set }}'
   become: true
   register: result
   notify:
