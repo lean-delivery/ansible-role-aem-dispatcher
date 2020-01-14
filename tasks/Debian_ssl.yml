@@ -1,15 +1,15 @@
 ---
 
-- name: Create links
+- name: Create apache links
   file:
     src: '{{ link_item.src }}'
     dest: '{{ link_item.dest }}'
     state: link
   loop:
-    - src: /lib/x86_64-linux-gnu/libssl.so.1.0.0
-      dest: /lib/x86_64-linux-gnu/libssl.so.10
-    - src: /lib/x86_64-linux-gnu/libcrypto.so.1.0.0
-      dest: /lib/x86_64-linux-gnu/libcrypto.so.10
+    - src: '{{ libssl_path }}'
+      dest: '{{ libssl_path | dirname }}/libssl.so.10'
+    - src: '{{ libcrypto_path }}'
+      dest: '{{ libcrypto_path | dirname }}/libcrypto.so.10'
     - src: '{{ apache_dir }}/mods-available/ssl.load'
       dest: '{{ apache_dir }}/mods-enabled/ssl.load'
     - src: '{{ apache_dir }}/mods-available/ssl.conf'

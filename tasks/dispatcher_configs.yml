@@ -1,20 +1,38 @@
 ---
 # file: tasks/dispatcher_configs.yml
 
-- name: Ensure that 'conf' directory exists
+- name: Ensure that dispatcher and farm directories exist
   file:
-    path: '{{ apache_dir }}/conf'
+    path: '{{ item }}'
     state: directory
+  loop:
+    - '{{ dispatcher_any_location }}'
+    - '{{ farms_any_location }}'
   become: true
 
-- name: ensure that dispatcher configuration files are ok
+- name: Ensure that dispatcher configuration files are ok
   template:
-    src: '{{ item }}.j2'
-    dest: '{{ dispatcher_any_location }}/{{ item }}'
+    src: '{{ item }}'
+    dest: '{{ dispatcher_any_location }}/{{ item | basename | regex_replace("\.j2","") }}'
     owner: '{{ web_server_user }}'
     group: '{{ web_server_group }}'
-    mode: 0755
-  loop: '{{ dispatcher_config_set }}'
+    mode: 0644
+  with_fileglob:
+    - ../templates/conf.d/dispatcher/*.j2
+  become: true
+  register: result
+  notify:
+    - restart apache
+
+- name: Ensure that farms configuration files are ok
+  template:
+    src: '{{ item }}'
+    dest: '{{ farms_any_location }}/{{ item | basename | regex_replace("\.j2","") }}'
+    owner: '{{ web_server_user }}'
+    group: '{{ web_server_group }}'
+    mode: 0644
+  with_fileglob:
+    - ../templates/conf.d/aem-farms/*.j2
   become: true
   register: result
   notify:

@@ -1,15 +1,30 @@
 ---
-# file: tasks/install.yml
 
-- name: ensure that httpd web-server is installed
-  become: true
-  package:
+- name: Install apache2 package
+  apt:
     name: '{{ apache_packages }}'
     state: present
+    update_cache: true
   register: installed_packages
+  retries: 3
+  delay: 2
   until: installed_packages is succeeded
+  when: ansible_os_family == 'Debian'
+  become: true
 
-- name: ensure that httpd is enabled
+- name: Install httpd package
+  yum:
+    name: '{{ apache_packages }}'
+    state: present
+    update_cache: true
+  register: installed_packages
+  retries: 3
+  delay: 2
+  until: installed_packages is succeeded
+  when: ansible_os_family == 'RedHat'
+  become: true
+
+- name: Ensure that apache service is enabled
   service:
     name: '{{ apache_service }}'
     enabled: true

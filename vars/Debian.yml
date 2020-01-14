@@ -14,3 +14,11 @@ ssl_conf_file: '{{ apache_dir }}/conf-available/ssl.conf'
 httpd_conf_file: '{{ apache_dir }}/apache2.conf'
 native_cert_source_file: '{{ certs_path }}/certs/ssl-cert-snakeoil.pem'
 native_key_source_file: '{{ certs_path }}/private/ssl-cert-snakeoil.key'
+libssl_path: "{{ (ansible_distribution_major_version == '16') | \
+                 ternary('/lib/x86_64-linux-gnu/libssl.so.1.0.0', \
+                         '/usr/lib/x86_64-linux-gnu/libssl.so.1.1') }}"
+libcrypto_path: "{{ (ansible_distribution_major_version == '16') | \
+                    ternary('/lib/x86_64-linux-gnu/libcrypto.so.1.0.0', \
+                            '/usr/lib/x86_64-linux-gnu/libcrypto.so.1.1') }}"
+ssl_version: "{{ (ansible_distribution_major_version == '16') | \
+                 ternary('10', '11') }}"

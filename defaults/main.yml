@@ -32,7 +32,7 @@ web_server_ssl: false
 # Default HTTPS port
 web_server_https_port: 443
 
-ftp_server_link: "{{ ftp_common_link }}{{ web_server_ssl | bool | ternary('-ssl', '') }}.so"
+ftp_server_link: "{{ ftp_common_link }}{{ web_server_ssl | bool | ternary('-ssl' + ssl_version|string, '') }}.so"
 
 # Next option should be changed ONLY for testing
 use_native_cert: false
@@ -49,7 +49,7 @@ aem_instance_ssl_port: 8443
 dispatcher_root: /opt/aemDispatcherCache
 
 # Dispatcher module version
-dispatcher_module_version: '4.3.2'
+dispatcher_module_version: '4.3.3'
 
 # Dispatcher log level
 # error(0): Errors
