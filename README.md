@@ -34,6 +34,8 @@ Role Variables
     default: `warn`
   - `web_server_ssl` - Enable or disable ssl on Apache\
     default: `false`
+  - `renders_ssl` - Enable or disable HTTPS connections to aem instances(renders)\
+    default: `false`
   - `web_server_https_port` - Ssl port for Apache\
     default: `443`
   - `dispatcher_root` - Dispatcher's directory\

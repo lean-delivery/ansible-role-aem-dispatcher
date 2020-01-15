@@ -1,6 +1,6 @@
 {% for render in dispatcher_back %}
 /rend0{{ loop.index }}
-    {% if web_server_ssl %}
+    {% if web_server_ssl and renders_ssl %}
 	{
 	    /hostname "{{ render }}"
 	    /port "{% if hostvars[render]['aem_instance_ssl_port'] is defined %}{{ hostvars[render]['aem_instance_ssl_port'] }}{% else %}{{ aem_instance_ssl_port }}{% endif %}"

@@ -29,6 +29,10 @@ web_server_log_level: warn
 
 # Enable HTTPS by default or not
 web_server_ssl: false
+
+# Enable HTTPS connections to aem instances(renders)
+renders_ssl: false
+
 # Default HTTPS port
 web_server_https_port: 443
 
