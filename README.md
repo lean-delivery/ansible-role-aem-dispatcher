@@ -39,11 +39,13 @@ Role Variables
   - `dispatcher_root` - Dispatcher's directory\
     default: `/opt/aemDispatcherCache`
   - `dispatcher_module_version` - Version of Dispatcher module\
-    default: `4.3.2`
+    default: `4.3.3`
   - `dispatcher_log_level` - Dispatcher's log level (possible values are: error, warn, error, info, debug, trace)\
     default: `warn`
   - `aem_instance_port` - Port on which Dispatcher connects to AEM instances\
     default: `4502`
+  - `aem_instance_ssl_port` - Ssl port on which Dispatcher connects to AEM instances\
+    default: `8443`
   - `dispatcher_back` - List of renders for this dispatcher. For example it can take a list from inventory groups. It this case you should set it like this: `dispatcher_back: "{{ groups['aem_publishers'] }}"`\
     default: `localhost`
 
