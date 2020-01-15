@@ -18,39 +18,41 @@ Apache httpd server version 2.2 or 2.4.
 Role Variables
 --------------
 
-  - `web_server_user` - Apache server user   
+  - `web_server_user` - Apache server user\
     default: `apache`
-  - `web_server_group` - Apache server user's group   
+  - `web_server_group` - Apache server user's group\
     default: `apache`
-  - `web_server_admin_email` - Admin's email   
+  - `web_server_admin_email` - Admin's email\
     default: `root@localhost`
-  - `apache_version` - Apche server version   
+  - `apache_version` - Apache server version\
     default: `2.4`
-  - `web_server_http_port` - Port for connection to Apache without ssl   
+  - `ftp_link` - Link to storage where installation files are placed, storage should contain /aem/dispatcher folder\
+    default: `ftp://example.com`
+  - `web_server_http_port` - Port for connection to Apache without ssl\
     default: `80`
-  - `web_server_log_level` - Apache's log level (possible values are: warn,notice,info,debug,error,notice)   
+  - `web_server_log_level` - Apache's log level (possible values are: warn,notice,info,debug,error,notice)\
     default: `warn`
-  - `web_server_ssl` - Enable or disable ssl on Apache   
+  - `web_server_ssl` - Enable or disable ssl on Apache\
     default: `false`
-  - `web_server_https_port` - SSl port for Apache  
+  - `web_server_https_port` - Ssl port for Apache\
     default: `443`
-  - `dispatcher_root` - Dispatcher's directory   
+  - `dispatcher_root` - Dispatcher's directory\
     default: `/opt/aemDispatcherCache`
-  - `dispatcher_module_version` - Version of Dispatcher module   
+  - `dispatcher_module_version` - Version of Dispatcher module\
     default: `4.3.2`
-  - `dispatcher_log_level` - Dispatcher's log level (possible values are: error, warn, error, info, debug, trace)   
+  - `dispatcher_log_level` - Dispatcher's log level (possible values are: error, warn, error, info, debug, trace)\
     default: `warn`
-  - `aem_instance_port` - Port on which Dispatcher connects to AEM instances   
+  - `aem_instance_port` - Port on which Dispatcher connects to AEM instances\
     default: `4502`
-  - `dispatcher_back` - List of renders for this dispatcher. For example it can take a list from inventory groups. It this case you should set it like this: `dispatcher_back: "{{ groups['aem_publishers'] }}"`
+  - `dispatcher_back` - List of renders for this dispatcher. For example it can take a list from inventory groups. It this case you should set it like this: `dispatcher_back: "{{ groups['aem_publishers'] }}"`\
     default: `localhost`
 
 Dependencies
 ------------
 
 We recomend to use this role in the scope with next roles:
-    - lean-delivery/ansible-role-aem-node
-    - lean-delivery/ansible-role-aem-pipeline
+  - lean-delivery/ansible-role-aem-node
+  - lean-delivery/ansible-role-aem-pipeline
 
 But you can also use only this one role if you already have some infrastracture in Adobe Experience Manager.
 
@@ -66,6 +68,7 @@ Example Playbook
     dispatcher_back: "{{ groups['aem_publishers'] }}"
   roles:
     - role: ansible-role-aem-dispatcher
+      ftp_link: ftp://myftp.example.com
       dispatcher_log_level: warn
 
 - name: authors_dispatcher_install
@@ -74,6 +77,7 @@ Example Playbook
     dispatcher_back: "{{ groups['aem_authors'] }}"
   roles:
     - role: ansible-role-aem-dispatcher
+      ftp_link: ftp://myftp.example.com
       dispatcher_log_level: warn
 
 ```
