@@ -23,6 +23,8 @@
   register: result
   notify:
     - restart apache
+  tags:
+   - skip_ansible_lint
 
 - name: Ensure that farms configuration files are ok
   template:
@@ -37,3 +39,5 @@
   register: result
   notify:
     - restart apache
+  tags:
+   - skip_ansible_lint

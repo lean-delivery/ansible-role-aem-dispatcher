@@ -1,3 +1,3 @@
 ---
 default_context:
-  role_name: ansible-role-aem-dispatcher
+  role_name: aem-dispatcher

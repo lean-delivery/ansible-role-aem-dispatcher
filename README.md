@@ -2,8 +2,8 @@ aem-dispatcher role
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-aem-dispatcher/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-aem-dispatcher.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-aem-dispatcher)
-[![Build Status](https://gitlab.com/lean-delivery/ansible-role-aem-dispatcher/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-aem-dispatcher/pipelines)
-[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.aem_dispatcher-blue.svg)](https://galaxy.ansible.com/lean_delivery/aem_dispatcher)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-aem-dispatcher/badges/master/pipeline.svg)](https://gitlab.com/lean-delivery/ansible-role-aem-dispatcher/pipelines)
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.aem__dispatcher-blue.svg)](https://galaxy.ansible.com/lean_delivery/aem-dispatcher)
 ![Ansible](https://img.shields.io/ansible/role/d/39616.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F39616%2F&query=$.min_ansible_version)
 
@@ -55,10 +55,10 @@ Dependencies
 ------------
 
 We recomend to use this role in the scope with next roles:
-  - lean-delivery/ansible-role-aem-node
-  - lean-delivery/ansible-role-aem-pipeline
+  - [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.aem_node-blue.svg)](https://galaxy.ansible.com/lean_delivery/aem_node)
+  - [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.aem_pipeline-blue.svg)](https://galaxy.ansible.com/lean_delivery/aem_pipeline)
 
-But you can also use only this one role if you already have some infrastracture in Adobe Experience Manager.
+But you can also use only this one role if you already have some infrastructure in Adobe Experience Manager.
 
 
 Example Playbook
@@ -71,7 +71,7 @@ Example Playbook
   vars:
     dispatcher_back: "{{ groups['aem_publishers'] }}"
   roles:
-    - role: ansible-role-aem-dispatcher
+    - role: lean_delivery.aem_dispatcher
       ftp_link: ftp://myftp.example.com
       dispatcher_log_level: warn
 
@@ -80,7 +80,7 @@ Example Playbook
   vars:
     dispatcher_back: "{{ groups['aem_authors'] }}"
   roles:
-    - role: ansible-role-aem-dispatcher
+    - role: lean_delivery.aem_dispatcher
       ftp_link: ftp://myftp.example.com
       dispatcher_log_level: warn
 
